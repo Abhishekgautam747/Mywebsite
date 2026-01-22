@@ -4,223 +4,352 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Abhishek Gautam — Financial Innovation & Stewardship</title>
-  
-  <!-- Premium Fonts -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Fraunces:opsz,wght@9..144,400;700&display=swap" rel="stylesheet">
-  
+
   <style>
     :root {
-      /* Palette: Soft Blue, White, Grey */
-      --primary: #0ea5e9; 
-      --primary-soft: #e0f2fe;
-      --bg-color: #f8fafc;
-      --text-main: #1e293b;
-      --text-muted: #64748b;
-      --glass-bg: rgba(255, 255, 255, 0.8);
-      --border-color: rgba(226, 232, 240, 0.9);
-      --card-bg: #ffffff;
-    }
-
-    /* --- Dark Mode Styles --- */
-    [data-theme="dark"] {
+      --primary: #0ea5e9;
+      --primary-soft: #0c4a6e;
       --bg-color: #0f172a;
       --text-main: #f1f5f9;
       --text-muted: #94a3b8;
-      --glass-bg: rgba(15, 23, 42, 0.8);
+      --glass-bg: rgba(30, 41, 59, 0.88);
       --border-color: #1e293b;
       --card-bg: #1e293b;
-      --primary-soft: #0c4a6e;
+    }
+    [data-theme="light"] {
+      --bg-color: #f8fafc;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --glass-bg: rgba(255, 255, 255, 0.82);
+      --border-color: rgba(226, 232, 240, 0.9);
+      --card-bg: #ffffff;
+      --primary-soft: #e0f2fe;
     }
 
+    * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-color);
+      background: var(--bg-color);
       color: var(--text-main);
       line-height: 1.8;
-      transition: background 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      transition: background 0.4s ease, color 0.4s ease;
     }
-
     h1, h2, h3, .logo { font-family: 'Fraunces', serif; font-weight: 700; }
-    a { text-decoration: none; color: inherit; transition: 0.3s; }
-    .container { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
 
-    /* --- Navigation Bar --- */
-    header { 
-      padding: 1.5rem 0; 
-      background: var(--glass-bg); 
-      backdrop-filter: blur(10px);
+    a { color: inherit; text-decoration: none; transition: 0.2s; }
+    a:hover { color: var(--primary); }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+    header {
       position: sticky;
       top: 0;
       z-index: 1000;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border-color);
+      padding: 1.2rem 0;
     }
+
     .nav-flex {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .logo { font-size: 1.6rem; color: var(--primary); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
-    .nav-links a { font-weight: 600; font-size: 0.95rem; color: var(--text-muted); }
-    .nav-links a:hover { color: var(--primary); }
-    
+
+    .logo { font-size: 1.7rem; color: var(--primary); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links li { position: relative; }
+
+    .nav-links a {
+      font-weight: 600;
+      font-size: 0.97rem;
+      color: var(--text-muted);
+      padding: 0.5rem 0.3rem;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      min-width: 200px;
+      padding: 0.6rem 0;
+      margin-top: 6px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: all 0.22s ease;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+    }
+
+    .nav-links li:hover .dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 0.7rem 1.4rem;
+      font-size: 0.94rem;
+    }
+
+    .dropdown a:hover { background: rgba(255,255,255,0.07); }
+
     .theme-toggle {
       background: none;
       border: 1px solid var(--border-color);
-      cursor: pointer;
-      font-size: 1.1rem;
-      padding: 5px 10px;
-      border-radius: 8px;
       color: var(--text-main);
+      font-size: 1.15rem;
+      padding: 6px 11px;
+      border-radius: 8px;
+      cursor: pointer;
     }
 
     .cta-btn {
       background: var(--primary);
       color: white !important;
-      padding: 8px 18px;
-      border-radius: 100px;
-      font-size: 0.85rem;
+      padding: 9px 20px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
     }
 
-    /* --- Home/Hero Section --- */
+    main {
+      padding: 2rem 0 4rem;
+      min-height: calc(100vh - 180px);
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .page.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     .hero {
-      padding: 140px 0;
-      background: radial-gradient(circle at top right, var(--primary-soft), var(--bg-color));
       text-align: center;
-    }
-    .hero h1 { font-size: 3.5rem; margin-bottom: 1.5rem; line-height: 1.1; color: var(--text-main); }
-    .hero-summary { font-size: 1.25rem; max-width: 700px; margin: 0 auto; color: var(--text-muted); }
-    .read-more { color: var(--primary); font-weight: 700; text-decoration: underline; }
-
-    /* --- About Me Section (The Article) --- */
-    #about { padding: 100px 0; background: var(--card-bg); }
-    .article-wrap { max-width: 750px; margin: 0 auto; }
-    .article-wrap h2 { font-size: 2.8rem; margin-bottom: 2rem; line-height: 1.2; }
-    .article-wrap h3 { font-size: 1.8rem; margin-top: 3.5rem; margin-bottom: 1.2rem; color: var(--primary); }
-    .article-wrap p { margin-bottom: 1.5rem; font-size: 1.15rem; }
-    
-    .stewardship-box {
-      border-left: 4px solid var(--primary);
-      padding: 2rem;
-      background: var(--bg-color);
-      font-style: italic;
-      margin: 2.5rem 0;
-      border-radius: 0 12px 12px 0;
+      padding: 140px 1rem 100px;
+      background: radial-gradient(circle at top right, var(--primary-soft), transparent 70%);
     }
 
-    /* --- General Sections --- */
-    #blogs { padding: 80px 0; }
-    .section-title { font-size: 2rem; margin-bottom: 2rem; border-bottom: 2px solid var(--primary-soft); display: inline-block; }
+    .hero h1 { font-size: 3.4rem; margin-bottom: 1.4rem; line-height: 1.1; }
 
-    footer { 
-      background: var(--bg-color); 
-      padding: 60px 0; 
-      text-align: center; 
-      border-top: 1px solid var(--border-color);
+    .hero p { font-size: 1.24rem; max-width: 720px; margin: 0 auto; color: var(--text-muted); }
+
+    .read-more {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: underline;
+      position: relative;
+    }
+
+    .read-more:hover::after {
+      width: 100%;
+    }
+
+    .read-more::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .content-block {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .content-block h1 { font-size: 2.9rem; margin-bottom: 1.6rem; text-align: center; color: var(--primary); }
+
+    .content-block h2 { font-size: 2.1rem; margin: 3rem 0 1.4rem; color: var(--primary); }
+
+    .content-block p { font-size: 1.16rem; margin-bottom: 1.5rem; }
+
+    .content-block ul {
+      list-style: none;
+      padding-left: 0;
+      max-width: 680px;
+      margin: 1.5rem auto;
+    }
+
+    .content-block ul li {
+      margin-bottom: 1.3rem;
+      font-size: 1.14rem;
+    }
+
+    .content-block ul li strong { color: var(--primary); }
+
+    .connect {
+      margin-top: 3.5rem;
+      text-align: center;
+      font-size: 1.15rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem 1rem 2rem;
       color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 100px 1rem 70px; }
+      .hero h1 { font-size: 2.7rem; }
+      .nav-links { gap: 1.4rem; }
+      .nav-links a { font-size: 0.92rem; }
     }
   </style>
 </head>
-<body data-theme="light">
+<body data-theme="dark">
 
 <header>
   <div class="container">
     <nav class="nav-flex">
-      <a href="#" class="logo">Abhishek<span>.</span></a>
+      <a href="#" class="logo" onclick="showPage('home'); return false;">Abhishek<span>.</span></a>
       <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About Me</a></li>
-        <li><a href="#blogs">Blogs</a></li>
-        <li><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌓</button></li>
-        <li><a href="#" class="cta-btn">Newsletter</a></li>
+        <li><a href="#" onclick="showPage('home'); return false;">Home</a></li>
+        <li>
+          <a href="#">About Me</a>
+          <div class="dropdown">
+            <a href="#" onclick="showPage('introduction'); return false;">Introduction</a>
+            <a href="#" onclick="showPage('my-journey'); return false;">My Journey</a>
+          </div>
+        </li>
+        <li><a href="#">Blogs</a></li>
+        <li><button class="theme-toggle" id="themeBtn" aria-label="Toggle theme" onclick="toggleTheme()">☀️</button></li>
+        <li><a href="#" class="cta-btn">Join the Journey →</a></li>
       </ul>
     </nav>
   </div>
 </header>
 
 <main>
-  <!-- HOME SECTION -->
-  <section id="home" class="hero">
-    <div class="container">
-      <h1>Financial Innovation inspired by mountain stillness.</h1>
-      <p class="hero-summary">
-        I explore the intersection of rigorous financial strategy and community stewardship from Kathmandu. 
-        I believe mastery is not a destination, but a tool used to give back to the valley that raised me... 
-        <a href="#about" class="read-more">read more</a>
+
+  <!-- Home -->
+  <div id="home" class="page active">
+    <section class="hero">
+      <div class="container">
+        <h1>Financial Innovation inspired by mountain stillness.</h1>
+        <p>
+          I explore the intersection of rigorous financial strategy and community stewardship from Kathmandu.<br>
+          I believe mastery is not a destination, but a tool used to give back to the valley that raised me. 
+          <a href="#" class="read-more" onclick="showPage('my-journey'); return false;">continue reading my journey</a>
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Introduction -->
+  <div id="introduction" class="page">
+    <div class="content-block">
+      <h1>Hey there! I'm Abhishek Gautam</h1>
+      <p>A fresh face in the world of accounting and finance from Kathmandu, Nepal. I recently topped the charts with All Nepal Rank-1 in CAP II back in December 2024, pretty cool milestone to kick things off.</p>
+
+      <h2>Education Journey</h2>
+      <ul>
+        <li><strong>The Institute of Chartered Accountants of Nepal (ICAN)</strong> – Focused on Accounting, Finance, and Tax (Completed May 2023)</li>
+        <li><strong>Shanker Dev Campus</strong> – Bachelor's in Business Studies (Graduated August 2023)</li>
+        <li><strong>Global College of Management</strong> – High School in Accountancy, Business Studies, and Finance (2021–2023)</li>
+        <li><strong>Awareness International Academy</strong> – Completed S.E.E.</li>
+      </ul>
+
+      <p class="connect">
+        If you'd like to connect, drop me a line at 
+        <a href="mailto:abhishekgau1am@gmail.com">abhishekgau1am@gmail.com</a><br>
+        or find me on LinkedIn: 
+        <a href="https://linkedin.com/in/abhishek8848" target="_blank">linkedin.com/in/abhishek8848</a>.<br><br>
+        Looking forward to chatting about finance, events, or just life in Kathmandu!
       </p>
     </div>
-  </section>
+  </div>
 
-  <!-- ABOUT ME SECTION -->
-  <section id="about">
-    <div class="container">
-      <article class="article-wrap">
-        <h2>The Stewardship of Success: Why I Build Beyond the Ledger</h2>
-        
-        <p>In the heart of Kathmandu, where the city’s bustle meets the stillness of the surrounding hills, I’ve spent the last few years navigating two very different worlds. One is the rigorous, disciplined world of finance and Chartered Accountancy. The other is the unpredictable, vibrant world of community building and indie hacking.</p>
-        
-        <p>Most people see my All Nepal Rank-1 in CAP II as a destination—a badge of merit. To me, however, it felt more like an initiation. I realized quickly that numbers, tax codes, and business case analyses are empty unless they are used to solve the actual problems facing our youth, our economy, and our valley.</p>
+  <!-- My Journey -->
+  <div id="my-journey" class="page">
+    <div class="content-block">
+      <h1>My Journey</h1>
 
-        <h3>Leadership as a Service</h3>
-        <p>During my time as President of the GCM Social Club, I wasn't interested in just holding a title. I wanted to create "Interaction Programs" that actually meant something. By bringing together minds like MP Gagan Thapa and Dr. YubaRaj Khatiwada, the goal wasn't just to talk—it was to understand the Youth Economy.</p>
-        
-        <div class="stewardship-box">
-            "It’s one thing to calculate a balance sheet; it’s another to stand by the Bagmati River for a cleanliness program or coordinate a blood donation drive. Your value isn't defined by what you achieve, but by what you give back to the soil you grew up in."
-        </div>
+      <h2>A Bit About Me</h2>
+      <p>I'm currently diving into the practical side of things as an Article Trainee at SAR Associates, a firm of Chartered Accountants, since February 2025. Before that, I had a fun run as President of the GCM Social Club from 2022 to 2023. We organized some engaging events like chats on youth economy with folks like MP Gagan Thapa and Economist Dr. YubaRaj Khatiwada, plus a session on socio-economic issues with Ex-Governor Dr. Chiranjibi Nepal and journalist Mr. Rabindra Mishra. We also ran blood donations with the Nepal Red Cross Society, donated to Manav Kalyan Samaj, and pitched in for the Bagmati Cleanliness Program, it was all about giving back and connecting with the community.</p>
 
-        <h3>Building in the Himalayas</h3>
-        <p>Currently, as an Article Trainee at SAR Associates, I see the gears of Nepal's economy moving every day. But when the office hours end, my work as a creator begins.</p>
-        
-        <p>I believe that for a young person in Nepal today, the "Giving Back" principle can take many forms: sharing insights with those coming up behind me, building tools for financial literacy, and proving world-class strategy can happen right here.</p>
+      <p>On the skills front, I enjoy project management, event planning, and getting my head around tax matters. I've picked up a couple of honors along the way: The Best Student of the Year and a Silver Medal in the National Business Case Analysis.</p>
 
-        <h3>The Mission</h3>
-        <p>My goal for this website is simple. It is a digital garden where I share the intersection of finance, productivity, and community service. I’m committed to sharing the journey—the wins, the failures, and the lessons learned from both the textbook and the street.</p>
-        
-        <p>I’m Abhishek Gautam. I believe that professional milestones only matter if you are helping someone else move forward. Let’s build something that outlasts us.</p>
-      </article>
+      <h2>Education Journey</h2>
+      <ul>
+        <li><strong>The Institute of Chartered Accountants of Nepal (ICAN)</strong> – Focused on Accounting, Finance, and Tax (Completed May 2023)</li>
+        <li><strong>Shanker Dev Campus</strong> – Bachelor's in Business Studies (Graduated August 2023)</li>
+        <li><strong>Global College of Management</strong> – High School in Accountancy, Business Studies, and Finance (2021–2023)</li>
+        <li><strong>Awareness International Academy</strong> – Completed S.E.E.</li>
+      </ul>
+
+      <p class="connect">
+        If you'd like to connect, drop me a line at 
+        <a href="mailto:abhishekgau1am@gmail.com">abhishekgau1am@gmail.com</a><br>
+        or find me on LinkedIn: 
+        <a href="https://linkedin.com/in/abhishek8848" target="_blank">linkedin.com/in/abhishek8848</a>.<br><br>
+        Looking forward to chatting about finance, events, or just life in Kathmandu!
+      </p>
     </div>
-  </section>
+  </div>
 
-  <!-- BLOGS SECTION -->
-  <section id="blogs" class="container">
-    <h2 class="section-title">Latest Reflections</h2>
-    <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
-      <div style="padding: 2rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px;">
-        <h4 style="color: var(--primary);">Upcoming: Financing Local Innovation</h4>
-        <p style="color: var(--text-muted); margin-top: 10px;">Thoughts on how capital should flow toward local Himalayan creators.</p>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer>
-  <div class="container" id="contact">
-    <p>Let's talk finance and community: <strong>chandramanigautam2005@gmail.com</strong></p>
-    <p style="margin-top: 20px;">&copy; 2026 Abhishek Gautam • Kathmandu, Nepal</p>
+  <div class="container">
+    <p>Let's talk finance and community: <strong>abhishekgau1am@gmail.com</strong></p>
+    <p>© 2026 Abhishek Gautam • Kathmandu, Nepal</p>
   </div>
 </footer>
 
 <script>
-  function toggleTheme() {
-    const body = document.body;
-    const currentTheme = body.getAttribute('data-theme');
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    
-    body.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Persist Theme on reload
-  window.onload = () => {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.body.setAttribute('data-theme', savedTheme);
-  };
+  function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById('themeBtn');
+    const isDark = body.getAttribute('data-theme') !== 'light';
+    const newTheme = isDark ? 'light' : 'dark';
+    body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    btn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+  }
+
+  // Load saved theme or default to dark
+  window.addEventListener('load', () => {
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.body.setAttribute('data-theme', saved);
+    document.getElementById('themeBtn').textContent = saved === 'dark' ? '☀️' : '🌙';
+  });
 </script>
 
 </body>
