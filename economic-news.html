@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Fraunces:opsz,wght@9..144,400;700&display=swap" rel="stylesheet">
 
-  <!-- jQuery (optional, but you already load it) -->
+  <!-- jQuery (optional, but already used on your main site) -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
   <style>
@@ -321,9 +321,44 @@
       const res = await fetch(`news.json?t=${Date.now()}`);
       if (!res.ok) throw new Error('news.json not found or could not be loaded');
 
-      const data = await res.json();
-      renderNews(data);
+      const raw = await res.json();
+      console.log('RAW DATA FROM news.json:', raw);
 
+      let articles = raw;
+
+      // If in future you wrap it as { "articles": [...] }
+      if (Array.isArray(raw.articles)) {
+        articles = raw.articles;
+      }
+
+      if (!Array.isArray(articles)) {
+        throw new Error('news.json is not an array of articles');
+      }
+
+      // Bucket by impact_score into critical/high/medium
+      const critical = [];
+      const high = [];
+      const medium = [];
+
+      articles.forEach(item => {
+        const score = Number(item.impact_score || 0);
+        if (score >= 9) {
+          critical.push(item);
+        } else if (score >= 7) {
+          high.push(item);
+        } else if (score >= 5) {
+          medium.push(item);
+        }
+      });
+
+      const data = {
+        generated_at: new Date().toISOString(),
+        critical,
+        high,
+        medium
+      };
+
+      renderNews(data);
       statusEl.textContent = 'News loaded from the latest news.json.';
     } catch (err) {
       console.error(err);
