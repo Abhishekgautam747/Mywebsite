@@ -271,7 +271,8 @@
     const renderSection = (title, items, colorClass) => {
       if (!items || items.length === 0) return;
       html += `<div class="category ${colorClass}"><h2>${title}</h2>`;
-      items.slice(0, 10).forEach(item => {
+      // SHOW ALL ITEMS (no .slice)
+      items.forEach(item => {
         html += `
           <div class="news-card">
             <h3><a href="${item.link || '#'}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3>
