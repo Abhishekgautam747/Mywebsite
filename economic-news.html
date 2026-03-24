@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Fraunces:opsz,wght@9..144,400;700&display=swap" rel="stylesheet">
 
-  <!-- jQuery (only if you need ripples or other plugins – optional here) -->
+  <!-- jQuery (optional, but you already load it) -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
   <style>
@@ -241,15 +241,13 @@
   <h1>Economic News Impact</h1>
 
   <div class="refresh-bar">
-    <button id="refresh-news-btn" class="cta-btn">
-      Refresh Economic News
-    </button>
-    <p id="refresh-status">Click “Refresh Economic News” to generate today’s impact analysis.</p>
+    <button id="refresh-news-btn" class="cta-btn">Refresh Economic News</button>
+    <p id="refresh-status">Data is loaded from <code>news.json</code> that you upload from Colab.</p>
   </div>
 
   <div id="news-content">
     <p style="text-align:center; color:var(--text-muted);">
-      No data loaded yet.
+      Loading latest high-impact economic news...
     </p>
   </div>
 
@@ -264,31 +262,6 @@
 </footer>
 
 <script>
-  // Helper: get "current date" and "is after 6AM" in Asia/Kathmandu, from the browser
-  function getNepalDateInfo() {
-    const now = new Date();
-    const formatter = new Intl.DateTimeFormat('en-CA', {
-      timeZone: 'Asia/Kathmandu',
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    });
-    const parts = formatter.formatToParts(now);
-    const lookup = {};
-    parts.forEach(p => { lookup[p.type] = p.value; });
-
-    const dateStr = `${lookup.year}-${lookup.month}-${lookup.day}`; // YYYY-MM-DD
-    const hour = parseInt(lookup.hour, 10);
-    const minute = parseInt(lookup.minute, 10);
-
-    const isAfterSix = (hour > 6) || (hour === 6 && minute >= 0);
-
-    return { dateStr, isAfterSix };
-  }
-
   function renderNews(data) {
     const content = document.getElementById('news-content');
     const updatedEl = document.getElementById('last-updated');
@@ -320,7 +293,7 @@
     renderSection('Medium Impact (Score 5–6)',   data.medium,   'medium');
 
     if (!html) {
-      html = '<p class="no-news">No high-impact news available right now (score ≥ 5).<br>Try again after some time.</p>';
+      html = '<p class="no-news">No high-impact news available right now (score ≥ 5).<br>Upload a new <code>news.json</code> from Colab and click Refresh.</p>';
     }
 
     content.innerHTML = html;
@@ -337,97 +310,35 @@
     }
   }
 
-  async function fetchFreshEconomicNews() {
-    const statusEl = document.getElementById('refresh-status');
+  async function loadEconomicNews() {
     const content = document.getElementById('news-content');
-
-    statusEl.textContent = 'Generating latest high-impact economic news. This may take some time...';
-    content.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Please wait, computing impact analysis…</p>';
+    const statusEl = document.getElementById('refresh-status');
 
     try {
-      // Call your backend endpoint that runs the heavy logic ON DEMAND
-      const res = await fetch('/api/economic-news', {
-        method: 'GET',
-        headers: { 'Accept': 'application/json' }
-      });
+      statusEl.textContent = 'Fetching news from news.json...';
 
-      if (!res.ok) throw new Error('Failed to fetch economic news');
+      // Cache-busting to always get your latest uploaded file
+      const res = await fetch(`news.json?t=${Date.now()}`);
+      if (!res.ok) throw new Error('news.json not found or could not be loaded');
 
       const data = await res.json();
-
-      // Cache in localStorage as "today’s result after 6AM"
-      const { dateStr } = getNepalDateInfo();
-      const cacheObj = {
-        date: dateStr,
-        payload: data,
-        cached_at: new Date().toISOString()
-      };
-      localStorage.setItem('economicNewsDaily', JSON.stringify(cacheObj));
-
       renderNews(data);
-      statusEl.textContent = 'Latest news generated and displayed.';
+
+      statusEl.textContent = 'News loaded from the latest news.json.';
     } catch (err) {
       console.error(err);
-      statusEl.textContent = 'Could not generate news. Please try again.';
+      statusEl.textContent = 'Could not load news.json. Make sure it is uploaded next to economic-news.html.';
       content.innerHTML = `<p class="no-news" style="color:#f87171;">
-        Could not load news right now.<br>
-        Please try again soon or contact support.
+        Could not load <code>news.json</code> right now.<br>
+        Please upload it from Colab and click Refresh again.
       </p>`;
     }
   }
 
-  async function handleRefreshClick() {
-    const statusEl = document.getElementById('refresh-status');
-    const { dateStr, isAfterSix } = getNepalDateInfo();
-
-    if (!isAfterSix) {
-      statusEl.textContent = 'You can refresh today’s news only after 6:00 AM Nepal time.';
-      return;
-    }
-
-    // Check if we already have cached data for today
-    const cacheRaw = localStorage.getItem('economicNewsDaily');
-    if (cacheRaw) {
-      try {
-        const cache = JSON.parse(cacheRaw);
-        if (cache.date === dateStr && cache.payload) {
-          // Already generated once today after 6AM, just reuse it
-          renderNews(cache.payload);
-          statusEl.textContent = 'Showing today’s cached news. Click again to force regeneration.';
-          // If you truly want to NEVER regenerate again that day, remove the line above
-          // and return here instead of falling through.
-          return;
-        }
-      } catch (e) {
-        console.warn('Failed to parse cached economic news, ignoring cache.', e);
-      }
-    }
-
-    // No valid cache for today -> fetch fresh
-    await fetchFreshEconomicNews();
-  }
-
   window.addEventListener('load', () => {
-    const btn = document.getElementById('refresh-news-btn');
-    if (btn) {
-      btn.addEventListener('click', handleRefreshClick);
-    }
-
-    // Optional: auto-load cached data if available for today (after 6AM)
-    const { dateStr, isAfterSix } = getNepalDateInfo();
-    const cacheRaw = localStorage.getItem('economicNewsDaily');
-    if (isAfterSix && cacheRaw) {
-      try {
-        const cache = JSON.parse(cacheRaw);
-        if (cache.date === dateStr && cache.payload) {
-          renderNews(cache.payload);
-          document.getElementById('refresh-status').textContent =
-            'Loaded today’s cached news. Click “Refresh Economic News” to regenerate.';
-        }
-      } catch (e) {
-        console.warn('Failed to parse cached economic news on load.', e);
-      }
-    }
+    document.getElementById('refresh-news-btn').addEventListener('click', loadEconomicNews);
+    // Auto-load once when page opens
+    loadEconomicNews();
   });
 </script>
 
