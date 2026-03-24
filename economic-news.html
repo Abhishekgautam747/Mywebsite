@@ -98,6 +98,8 @@
       border-radius: 999px;
       font-size: 0.88rem;
       font-weight: 600;
+      border: none;
+      cursor: pointer;
     }
 
     main {
@@ -108,8 +110,19 @@
       font-family: 'Fraunces', serif;
       font-size: 3rem;
       text-align: center;
-      margin: 2rem 0 3rem;
+      margin: 2rem 0 2rem;
       color: var(--primary);
+    }
+
+    .refresh-bar {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    #refresh-status {
+      margin-top: 0.6rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
     }
 
     .category {
@@ -227,8 +240,17 @@
 <main class="container">
   <h1>Economic News Impact</h1>
 
+  <div class="refresh-bar">
+    <button id="refresh-news-btn" class="cta-btn">
+      Refresh Economic News
+    </button>
+    <p id="refresh-status">Click “Refresh Economic News” to generate today’s impact analysis.</p>
+  </div>
+
   <div id="news-content">
-    <p style="text-align:center; color:var(--text-muted);">Loading latest high-impact economic news...</p>
+    <p style="text-align:center; color:var(--text-muted);">
+      No data loaded yet.
+    </p>
   </div>
 
   <p id="last-updated"></p>
@@ -242,60 +264,111 @@
 </footer>
 
 <script>
-  async function loadEconomicNews() {
+  // Helper: get "current date" and "is after 6AM" in Asia/Kathmandu, from the browser
+  function getNepalDateInfo() {
+    const now = new Date();
+    const formatter = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Kathmandu',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+    const parts = formatter.formatToParts(now);
+    const lookup = {};
+    parts.forEach(p => { lookup[p.type] = p.value; });
+
+    const dateStr = `${lookup.year}-${lookup.month}-${lookup.day}`; // YYYY-MM-DD
+    const hour = parseInt(lookup.hour, 10);
+    const minute = parseInt(lookup.minute, 10);
+
+    const isAfterSix = (hour > 6) || (hour === 6 && minute >= 0);
+
+    return { dateStr, isAfterSix };
+  }
+
+  function renderNews(data) {
     const content = document.getElementById('news-content');
     const updatedEl = document.getElementById('last-updated');
 
+    let html = '';
+
+    const renderSection = (title, items, colorClass) => {
+      if (!items || items.length === 0) return;
+      html += `<div class="category ${colorClass}"><h2>${title}</h2>`;
+      items.slice(0, 10).forEach(item => {
+        html += `
+          <div class="news-card">
+            <h3><a href="${item.link || '#'}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3>
+            <p class="news-summary">${item.summary || 'No summary available'}</p>
+            <div class="news-meta">
+              <span>Score: ${item.impact_score}</span>
+              <span>Regions: ${item.regions?.join(', ') || 'Global'}</span>
+              <span>Sectors: ${item.sectors?.join(', ') || 'Economy'}</span>
+              <span>Source: ${item.source || 'Unknown'}</span>
+            </div>
+          </div>
+        `;
+      });
+      html += '</div>';
+    };
+
+    renderSection('Critical Impact (Score 9–10)', data.critical, 'critical');
+    renderSection('High Impact (Score 7–8)',     data.high,     'high');
+    renderSection('Medium Impact (Score 5–6)',   data.medium,   'medium');
+
+    if (!html) {
+      html = '<p class="no-news">No high-impact news available right now (score ≥ 5).<br>Try again after some time.</p>';
+    }
+
+    content.innerHTML = html;
+
+    if (data.generated_at) {
+      const date = new Date(data.generated_at);
+      updatedEl.textContent = `Last updated: ${date.toLocaleString('en-NP', {
+        timeZone: 'Asia/Kathmandu',
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      })}`;
+    } else {
+      updatedEl.textContent = '';
+    }
+  }
+
+  async function fetchFreshEconomicNews() {
+    const statusEl = document.getElementById('refresh-status');
+    const content = document.getElementById('news-content');
+
+    statusEl.textContent = 'Generating latest high-impact economic news. This may take some time...';
+    content.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Please wait, computing impact analysis…</p>';
+
     try {
-      // Cache-busting to always get fresh data
-      const res = await fetch(`news.json?t=${Date.now()}`);
-      if (!res.ok) throw new Error('news.json not found or empty');
+      // Call your backend endpoint that runs the heavy logic ON DEMAND
+      const res = await fetch('/api/economic-news', {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (!res.ok) throw new Error('Failed to fetch economic news');
 
       const data = await res.json();
 
-      let html = '';
-
-      const renderSection = (title, items, colorClass) => {
-        if (!items || items.length === 0) return '';
-        html += `<div class="category ${colorClass}"><h2>${title}</h2>`;
-        items.slice(0, 10).forEach(item => {
-          html += `
-            <div class="news-card">
-              <h3><a href="${item.link || '#'}" target="_blank">${item.title}</a></h3>
-              <p class="news-summary">${item.summary || 'No summary available'}</p>
-              <div class="news-meta">
-                <span>Score: ${item.impact_score}</span>
-                <span>Regions: ${item.regions?.join(', ') || 'Global'}</span>
-                <span>Sectors: ${item.sectors?.join(', ') || 'Economy'}</span>
-                <span>Source: ${item.source || 'Unknown'}</span>
-              </div>
-            </div>
-          `;
-        });
-        html += '</div>';
+      // Cache in localStorage as "today’s result after 6AM"
+      const { dateStr } = getNepalDateInfo();
+      const cacheObj = {
+        date: dateStr,
+        payload: data,
+        cached_at: new Date().toISOString()
       };
+      localStorage.setItem('economicNewsDaily', JSON.stringify(cacheObj));
 
-      renderSection('Critical Impact (Score 9–10)', data.critical, 'critical');
-      renderSection('High Impact (Score 7–8)',     data.high,     'high');
-      renderSection('Medium Impact (Score 5–6)',   data.medium,   'medium');
-
-      if (!html) {
-        html = '<p class="no-news">No high-impact news available right now (score ≥ 5).<br>Check back later — data updates hourly.</p>';
-      }
-
-      content.innerHTML = html;
-
-      if (data.generated_at) {
-        const date = new Date(data.generated_at);
-        updatedEl.textContent = `Last updated: ${date.toLocaleString('en-NP', {
-          timeZone: 'Asia/Kathmandu',
-          dateStyle: 'medium',
-          timeStyle: 'short'
-        })}`;
-      }
-
+      renderNews(data);
+      statusEl.textContent = 'Latest news generated and displayed.';
     } catch (err) {
       console.error(err);
+      statusEl.textContent = 'Could not generate news. Please try again.';
       content.innerHTML = `<p class="no-news" style="color:#f87171;">
         Could not load news right now.<br>
         Please try again soon or contact support.
@@ -303,11 +376,59 @@
     }
   }
 
-  // Load when page opens
-  window.addEventListener('load', loadEconomicNews);
+  async function handleRefreshClick() {
+    const statusEl = document.getElementById('refresh-status');
+    const { dateStr, isAfterSix } = getNepalDateInfo();
 
-  // Optional: refresh content every 10 minutes without reloading page
-  setInterval(loadEconomicNews, 10 * 60 * 1000);
+    if (!isAfterSix) {
+      statusEl.textContent = 'You can refresh today’s news only after 6:00 AM Nepal time.';
+      return;
+    }
+
+    // Check if we already have cached data for today
+    const cacheRaw = localStorage.getItem('economicNewsDaily');
+    if (cacheRaw) {
+      try {
+        const cache = JSON.parse(cacheRaw);
+        if (cache.date === dateStr && cache.payload) {
+          // Already generated once today after 6AM, just reuse it
+          renderNews(cache.payload);
+          statusEl.textContent = 'Showing today’s cached news. Click again to force regeneration.';
+          // If you truly want to NEVER regenerate again that day, remove the line above
+          // and return here instead of falling through.
+          return;
+        }
+      } catch (e) {
+        console.warn('Failed to parse cached economic news, ignoring cache.', e);
+      }
+    }
+
+    // No valid cache for today -> fetch fresh
+    await fetchFreshEconomicNews();
+  }
+
+  window.addEventListener('load', () => {
+    const btn = document.getElementById('refresh-news-btn');
+    if (btn) {
+      btn.addEventListener('click', handleRefreshClick);
+    }
+
+    // Optional: auto-load cached data if available for today (after 6AM)
+    const { dateStr, isAfterSix } = getNepalDateInfo();
+    const cacheRaw = localStorage.getItem('economicNewsDaily');
+    if (isAfterSix && cacheRaw) {
+      try {
+        const cache = JSON.parse(cacheRaw);
+        if (cache.date === dateStr && cache.payload) {
+          renderNews(cache.payload);
+          document.getElementById('refresh-status').textContent =
+            'Loaded today’s cached news. Click “Refresh Economic News” to regenerate.';
+        }
+      } catch (e) {
+        console.warn('Failed to parse cached economic news on load.', e);
+      }
+    }
+  });
 </script>
 
 </body>
