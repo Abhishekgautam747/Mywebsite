@@ -287,7 +287,7 @@
     #stopwatch {
       position: relative;
       overflow: hidden;
-      min-height: calc(100vh - 60px); /* Adjust based on header height */
+      min-height: calc(100vh - 60px);
       font-family: 'Lora', serif;
       color: #fff;
       background: #000;
@@ -424,14 +424,13 @@
           </div>
         </li>
 
-        <!-- NEW: Games dropdown with Game Theory -->
+        <!-- Games dropdown with Game Theory -->
         <li>
           <a href="#">Games</a>
           <div class="dropdown">
             <a href="#" onclick="showPage('game-theory'); return false;">Game Theory</a>
           </div>
         </li>
-        <!-- END NEW -->
 
         <li><a href="#">Blogs</a></li>
         <li><a href="economic-news.html">Economic News</a></li>
@@ -576,7 +575,7 @@
     </div>
   </div>
 
-  <!-- Game Theory Page (NEW) -->
+  <!-- Game Theory Page -->
   <div id="game-theory" class="page">
     <section class="hero">
       <div class="container" style="text-align:center; padding-top:120px; padding-bottom:80px;">
@@ -584,7 +583,6 @@
         <p style="max-width:720px; margin:1.5rem auto 2rem; color:var(--text-muted);">
           Launch an interactive game-theory trainer that takes you from everyday dilemmas to high-stakes geopolitical strategy.
         </p>
-        <!-- Replace game-theory.html with the actual deployed URL of your React/Vite STRATAGEM game -->
         <a href="game-theory.html" target="_blank" rel="noopener noreferrer" class="cta-btn">
           Launch Game Theory
         </a>
