@@ -423,6 +423,16 @@
             <a href="#" onclick="showPage('achievements'); return false;">Achievements</a>
           </div>
         </li>
+
+        <!-- NEW: Games dropdown with Game Theory -->
+        <li>
+          <a href="#">Games</a>
+          <div class="dropdown">
+            <a href="#" onclick="showPage('game-theory'); return false;">Game Theory</a>
+          </div>
+        </li>
+        <!-- END NEW -->
+
         <li><a href="#">Blogs</a></li>
         <li><a href="economic-news.html">Economic News</a></li>
         <li><a href="#" onclick="showPage('stopwatch'); return false;">Stopwatch</a></li>
@@ -565,6 +575,26 @@
       </p>
     </div>
   </div>
+
+  <!-- Game Theory Page (NEW) -->
+  <div id="game-theory" class="page">
+    <section class="hero">
+      <div class="container" style="text-align:center; padding-top:120px; padding-bottom:80px;">
+        <h1>Game Theory — STRATAGEM</h1>
+        <p style="max-width:720px; margin:1.5rem auto 2rem; color:var(--text-muted);">
+          Launch an interactive game-theory trainer that takes you from everyday dilemmas to high-stakes geopolitical strategy.
+        </p>
+        <!-- Replace game-theory.html with the actual deployed URL of your React/Vite STRATAGEM game -->
+        <a href="game-theory.html" target="_blank" rel="noopener noreferrer" class="cta-btn">
+          Launch Game Theory
+        </a>
+        <p style="margin-top:1.5rem; font-size:0.95rem; color:var(--text-muted);">
+          The game will open in a new tab, so you can keep exploring this site while you play.
+        </p>
+      </div>
+    </section>
+  </div>
+
   <!-- Stopwatch Page -->
   <div id="stopwatch" class="page">
     <video id="bg-video" autoplay muted loop playsinline>
@@ -616,6 +646,7 @@
         <li><a href="#" onclick="showPage('my-journey'); return false;">My Journey</a></li>
         <li><a href="#" onclick="showPage('achievements'); return false;">Achievements</a></li>
         <li><a href="#">Blogs</a></li>
+        <li><a href="#" onclick="showPage('game-theory'); return false;">Game Theory</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
     </div>
