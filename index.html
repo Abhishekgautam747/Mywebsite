@@ -7,12 +7,12 @@
   <meta name="description" content="Abhishek Gautam — All Nepal Rank 1, CAP II. Financial innovation inspired by mountain stillness. Chartered Accountancy student from Kathmandu, Nepal."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Lora:ital,wght@0,400..700;1,400..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery.ripples@0.6.3/dist/jquery.ripples.min.js"></script>
   <style>
 /* ══════════════════════════════════════════════
-   TOKENS  —  Warm Black · Gold · Green · Cream
+   TOKENS
    ══════════════════════════════════════════════ */
 :root {
   --black:    #09080a;
@@ -32,7 +32,8 @@
   --text:     #f0e8cc;
   --muted:    #9a8f6e;
   --border:   rgba(240,192,64,.13);
-  --glass:    rgba(9,8,10,.8);
+  --glass:    rgba(9,8,10,.82);
+  --radius:   16px;
 }
 [data-theme="light"] {
   --black:    #faf3e0;
@@ -41,7 +42,7 @@
   --s1:       #fffbf0;
   --s2:       #f5ead0;
   --s3:       #e8d9a8;
-  --glass:    rgba(250,243,224,.9);
+  --glass:    rgba(250,243,224,.92);
   --text:     #1a1608;
   --muted:    #6b5f3a;
   --border:   rgba(160,120,0,.15);
@@ -66,14 +67,39 @@ main{min-height:calc(100vh - 80px)}
 .page.active{display:block;animation:fadeUp .55s cubic-bezier(.22,1,.36,1) both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
+/* ══ UIVERSE-INSPIRED BUTTON STYLES ══════════════════════════ */
+/* Shimmer Button */
+.btn-shimmer{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:var(--black)!important;font-weight:700;padding:13px 28px;border-radius:999px;border:none;cursor:pointer;font-size:.94rem;box-shadow:0 8px 32px rgba(240,192,64,.38);transition:transform .2s,box-shadow .2s}
+.btn-shimmer::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.4) 50%,transparent 60%);transform:translateX(-100%);transition:transform .55s}
+.btn-shimmer:hover::after{transform:translateX(100%)}
+.btn-shimmer:hover{transform:translateY(-2px);box-shadow:0 14px 44px rgba(240,192,64,.58)}
+
+/* Glowing Green Button */
+.btn-glow{position:relative;background:transparent;color:var(--green)!important;border:2px solid var(--green);padding:13px 28px;border-radius:999px;font-weight:700;font-size:.94rem;cursor:pointer;transition:all .3s;box-shadow:0 0 0 rgba(61,186,111,0)}
+.btn-glow:hover{background:var(--green);color:var(--black)!important;box-shadow:0 0 30px rgba(61,186,111,.55),0 0 60px rgba(61,186,111,.25)}
+
+/* 3D Press Button */
+.btn-3d{background:linear-gradient(to bottom,var(--gold),var(--gold-dim));color:var(--black)!important;font-weight:700;padding:13px 28px;border-radius:999px;font-size:.94rem;border:none;cursor:pointer;box-shadow:0 6px 0 #7a5c00,0 8px 6px rgba(0,0,0,.4);transition:all .1s;transform:translateY(0)}
+.btn-3d:hover{box-shadow:0 4px 0 #7a5c00,0 6px 6px rgba(0,0,0,.4);transform:translateY(2px)}
+.btn-3d:active{box-shadow:0 1px 0 #7a5c00,0 2px 4px rgba(0,0,0,.3);transform:translateY(5px)}
+
+/* Ghost Neon Button */
+.btn-neon{background:none;border:1px solid var(--s3);color:var(--muted)!important;padding:13px 28px;border-radius:999px;font-weight:500;font-size:.94rem;cursor:pointer;backdrop-filter:blur(8px);transition:all .3s;position:relative}
+.btn-neon:hover{border-color:var(--gold);color:var(--gold)!important;background:var(--gold-glow);text-shadow:0 0 8px rgba(240,192,64,.5)}
+
+/* Pill Pulse Button */
+.btn-pulse{background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:var(--black)!important;font-weight:700;padding:8px 18px;border-radius:999px;font-size:.83rem;box-shadow:0 4px 20px rgba(240,192,64,.38);animation:pulseGlow 2.5s ease-in-out infinite;transition:transform .2s}
+@keyframes pulseGlow{0%,100%{box-shadow:0 4px 20px rgba(240,192,64,.38)}50%{box-shadow:0 4px 35px rgba(240,192,64,.7),0 0 60px rgba(240,192,64,.2)}}
+.btn-pulse:hover{transform:translateY(-1px)}
+
 /* ── NAV ── */
-header{position:sticky;top:0;z-index:1000;background:var(--glass);backdrop-filter:blur(20px) saturate(160%);border-bottom:1px solid var(--border);padding:.9rem 0}
+header{position:sticky;top:0;z-index:1000;background:var(--glass);backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid var(--border);padding:.9rem 0}
 .nav-flex{display:flex;justify-content:space-between;align-items:center;gap:.8rem}
 .brand{font-size:1.55rem;color:var(--gold);letter-spacing:-.02em}
 .brand span{color:var(--green)}
 .nav-links{display:flex;gap:.15rem;list-style:none;align-items:center;flex-wrap:wrap}
 .nav-links li{position:relative}
-.nav-links a{font-weight:500;font-size:.87rem;color:var(--muted);padding:.4rem .68rem;border-radius:8px;transition:color .2s,background .2s}
+.nav-links a{font-weight:500;font-size:.87rem;color:var(--muted);padding:.4rem .68rem;border-radius:8px;transition:color .2s,background .2s;cursor:pointer}
 .nav-links a:hover{color:var(--gold);background:var(--gold-glow)}
 .dropdown{position:absolute;top:calc(100% + 8px);left:0;background:var(--s0);border:1px solid var(--border);border-radius:12px;min-width:185px;padding:.45rem;opacity:0;visibility:hidden;transform:translateY(8px);transition:all .22s ease;box-shadow:0 20px 50px rgba(0,0,0,.5)}
 .nav-links li:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0)}
@@ -81,12 +107,10 @@ header{position:sticky;top:0;z-index:1000;background:var(--glass);backdrop-filte
 .dropdown a:hover{background:var(--gold-glow);color:var(--gold)}
 .theme-btn{background:none;border:1px solid var(--s3);color:var(--text);font-size:.95rem;padding:5px 9px;border-radius:8px;cursor:pointer;transition:border-color .2s,background .2s}
 .theme-btn:hover{background:var(--gold-glow);border-color:var(--gold)}
-.pill-btn{background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:var(--black) !important;font-weight:700;padding:8px 18px;border-radius:999px;font-size:.83rem;box-shadow:0 4px 20px rgba(240,192,64,.38);transition:transform .2s,box-shadow .2s}
-.pill-btn:hover{transform:translateY(-1px);box-shadow:0 8px 30px rgba(240,192,64,.55)}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
 .hamburger span{width:24px;height:2px;background:var(--text);border-radius:2px;display:block;transition:all .3s}
 
-/* ═══ HERO ═══════════════════════════════════════ */
+/* ══ HERO ═══════════════════════════════════════ */
 #home{position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 90% 70% at 65% -10%,rgba(240,192,64,.11) 0%,transparent 60%),radial-gradient(ellipse 55% 45% at 5% 85%,rgba(61,186,111,.08) 0%,transparent 55%),radial-gradient(ellipse 40% 40% at 90% 80%,rgba(249,115,22,.055) 0%,transparent 50%),var(--black)}
 .hero-orb{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(240,192,64,.07) 0%,transparent 70%);top:-140px;right:-160px;z-index:0;animation:orbP 9s ease-in-out infinite}
@@ -105,15 +129,10 @@ header{position:sticky;top:0;z-index:1000;background:var(--glass);backdrop-filte
 .hero-tagline{font-size:clamp(1rem,1.85vw,1.2rem);max-width:620px;color:var(--muted);line-height:1.82;animation:fadeUp .8s .35s both}
 .hero-quote{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(.93rem,1.55vw,1.12rem);color:var(--muted);max-width:560px;opacity:.88;border-left:3px solid var(--green);padding-left:1rem;text-align:left;animation:fadeUp .9s .5s both}
 .hero-ctas{display:flex;gap:.9rem;flex-wrap:wrap;justify-content:center;animation:fadeUp 1s .65s both}
-.cta-gold{background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:var(--black) !important;padding:13px 28px;border-radius:999px;font-weight:700;font-size:.94rem;box-shadow:0 8px 32px rgba(240,192,64,.38);transition:transform .2s,box-shadow .2s}
-.cta-gold:hover{transform:translateY(-2px);box-shadow:0 14px 44px rgba(240,192,64,.58)}
-.cta-green{background:linear-gradient(135deg,var(--green-dim),var(--green));color:var(--black) !important;padding:13px 28px;border-radius:999px;font-weight:700;font-size:.94rem;box-shadow:0 8px 28px rgba(61,186,111,.32);transition:transform .2s,box-shadow .2s}
-.cta-green:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(61,186,111,.48)}
-.cta-ghost{border:1px solid var(--s3);color:var(--muted);padding:13px 28px;border-radius:999px;font-weight:500;font-size:.94rem;backdrop-filter:blur(8px);transition:border-color .2s,color .2s,background .2s}
-.cta-ghost:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-glow)}
-.hero-stats{display:flex;gap:0;flex-wrap:wrap;justify-content:center;background:var(--s0);border:1px solid var(--border);border-radius:20px;overflow:hidden;animation:fadeUp 1s .8s both}
-.stat-item{padding:1.15rem 1.9rem;text-align:center;border-right:1px solid var(--border)}
+.hero-stats{display:flex;gap:0;flex-wrap:wrap;justify-content:center;background:var(--s0);border:1px solid var(--border);border-radius:20px;overflow:hidden;animation:fadeUp 1s .8s both;box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.stat-item{padding:1.15rem 1.9rem;text-align:center;border-right:1px solid var(--border);transition:background .2s}
 .stat-item:last-child{border-right:none}
+.stat-item:hover{background:var(--s1)}
 .stat-num{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:900;line-height:1}
 .stat-num.g{color:var(--gold)}.stat-num.gr{color:var(--green)}.stat-num.am{color:var(--amber)}
 .stat-lbl{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:4px}
@@ -122,7 +141,7 @@ header{position:sticky;top:0;z-index:1000;background:var(--glass);backdrop-filte
 .scroll-line{width:1px;height:34px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollD 2s ease-in-out infinite}
 @keyframes scrollD{0%,100%{transform:scaleY(1);opacity:.5}50%{transform:scaleY(1.4);opacity:1}}
 
-/* ═══ SHARED SECTION HELPERS ═══════════════════ */
+/* ══ SHARED SECTION HELPERS ══════════════════════ */
 .section-eyebrow{display:inline-block;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.5rem}
 .section-eyebrow.gr{color:var(--green)}
 .section-title{font-size:clamp(1.65rem,3.2vw,2.65rem);line-height:1.15}
@@ -131,24 +150,29 @@ header{position:sticky;top:0;z-index:1000;background:var(--glass);backdrop-filte
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s,transform .65s}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
-/* ═══ INTRODUCTION ══════════════════════════════ */
+/* ══ INTRODUCTION ════════════════════════════════ */
 #introduction{padding:6rem 0 5rem}
-.intro-card{max-width:800px;margin:0 auto;background:var(--s0);border:1px solid var(--border);border-radius:24px;padding:3rem 3.5rem;box-shadow:0 24px 64px rgba(0,0,0,.35);text-align:center}
+.intro-card{max-width:800px;margin:0 auto;background:var(--s0);border:1px solid var(--border);border-radius:24px;padding:3rem 3.5rem;box-shadow:0 24px 64px rgba(0,0,0,.35);text-align:center;position:relative;overflow:hidden}
+.intro-card::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(240,192,64,.08),transparent 70%);pointer-events:none}
 .intro-card h1{font-size:clamp(1.6rem,2.7vw,2.35rem);margin-bottom:1.1rem;color:var(--gold)}
 .intro-card p{color:var(--muted);font-size:1.04rem;margin-bottom:1.3rem;line-height:1.87}
 .contact-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem;margin-top:1.8rem}
-.chip{display:inline-flex;align-items:center;gap:.45rem;background:var(--s1);border:1px solid var(--border);padding:.48rem 1.05rem;border-radius:999px;font-size:.87rem;color:var(--muted);transition:border-color .2s,color .2s,background .2s}
-.chip:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-glow)}
+/* Uiverse-style chip */
+.chip{display:inline-flex;align-items:center;gap:.45rem;background:var(--s1);border:1px solid var(--border);padding:.48rem 1.05rem;border-radius:999px;font-size:.87rem;color:var(--muted);transition:all .3s;position:relative;overflow:hidden}
+.chip::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 30%,rgba(240,192,64,.08) 70%);opacity:0;transition:opacity .3s}
+.chip:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-glow);transform:translateY(-2px);box-shadow:0 8px 20px rgba(240,192,64,.2)}
+.chip:hover::before{opacity:1}
 
-/* ═══ JOURNEY ════════════════════════════════════ */
+/* ══ JOURNEY ══════════════════════════════════════ */
 #my-journey{padding:5rem 0}
 .about-prose{max-width:820px;margin:0 auto 2.5rem;font-size:1.03rem;color:var(--muted);text-align:center;line-height:1.92}
 .about-prose strong{color:var(--text)}
 .timeline{max-width:880px;margin:0 auto;position:relative;padding:2rem 0}
 .tl-line{position:absolute;left:50%;transform:translateX(-50%);top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--gold-dim) 8%,var(--green-dim) 92%,transparent)}
 .tl-item{display:grid;grid-template-columns:1fr 40px 1fr;align-items:center;margin-bottom:3.5rem}
-.tl-card{background:var(--s0);border:1px solid var(--border);border-radius:16px;padding:1.5rem 1.8rem;box-shadow:0 8px 32px rgba(0,0,0,.25);transition:transform .25s,box-shadow .25s,border-color .25s}
-.tl-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.35);border-color:rgba(240,192,64,.28)}
+/* Uiverse glassmorphism card */
+.tl-card{background:linear-gradient(135deg,var(--s0) 0%,rgba(26,22,9,.95) 100%);border:1px solid var(--border);border-radius:16px;padding:1.5rem 1.8rem;box-shadow:0 8px 32px rgba(0,0,0,.25),inset 0 1px 0 rgba(240,192,64,.08);transition:transform .25s,box-shadow .25s,border-color .25s;backdrop-filter:blur(4px)}
+.tl-card:hover{transform:translateY(-4px);box-shadow:0 20px 55px rgba(0,0,0,.4),0 0 0 1px rgba(240,192,64,.2),inset 0 1px 0 rgba(240,192,64,.12);border-color:rgba(240,192,64,.3)}
 .tl-card h3{font-size:1.06rem;margin-bottom:.35rem;color:var(--cream)}
 .tl-card p{font-size:.87rem;color:var(--muted);margin-top:.2rem}
 .tl-card strong{color:var(--text)}
@@ -162,17 +186,69 @@ header{position:sticky;top:0;z-index:1000;background:var(--glass);backdrop-filte
 .tl-item.right .tl-card{grid-column:3}.tl-item.right .tl-empty{grid-column:1}.tl-item.right .tl-dot{grid-column:2;grid-row:1}
 .tl-item.left  .tl-card{grid-column:1}.tl-item.left  .tl-empty{grid-column:3}.tl-item.left  .tl-dot{grid-column:2;grid-row:1}
 
-/* ═══ ACHIEVEMENTS ══════════════════════════════ */
+/* ══ ACHIEVEMENTS ════════════════════════════════ */
 #achievements{padding:5rem 0}
 .ach-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;max-width:860px;margin:0 auto}
-.ach-card{background:var(--s0);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.25);transition:transform .25s,box-shadow .25s,border-color .25s}
-.ach-card:hover{transform:translateY(-6px);box-shadow:0 20px 55px rgba(0,0,0,.35);border-color:rgba(240,192,64,.28)}
+/* Uiverse-style hover card with border glow */
+.ach-card{background:var(--s0);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.25);transition:all .35s;position:relative}
+.ach-card::after{content:'';position:absolute;inset:0;border-radius:20px;box-shadow:inset 0 0 0 1px transparent;transition:box-shadow .35s;pointer-events:none}
+.ach-card:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 28px 65px rgba(0,0,0,.4)}
+.ach-card:hover::after{box-shadow:inset 0 0 0 1px rgba(240,192,64,.4),0 0 40px rgba(240,192,64,.12)}
 .ach-img{width:100%;aspect-ratio:4/3;object-fit:contain;background:var(--s1);padding:1rem}
 .ach-body{padding:1.35rem 1.65rem}
 .ach-body h3{font-size:1.03rem;margin-bottom:.32rem;color:var(--cream)}
 .ach-body p{font-size:.87rem;color:var(--muted)}
 
-/* ═══ GAME THEORY ════════════════════════════════ */
+/* ══ BLOGS SECTION ════════════════════════════════ */
+#blogs{padding:5rem 0}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.8rem;max-width:1100px;margin:0 auto}
+/* Uiverse magazine-style blog card */
+.blog-card{background:var(--s0);border:1px solid var(--border);border-radius:20px;overflow:hidden;cursor:pointer;transition:all .35s;position:relative;display:flex;flex-direction:column}
+.blog-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.4),0 0 0 1px rgba(240,192,64,.2)}
+.blog-cover{height:200px;position:relative;overflow:hidden;flex-shrink:0}
+.blog-cover-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;transition:transform .4s}
+.blog-card:hover .blog-cover-inner{transform:scale(1.06)}
+.blog-cover-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(9,8,10,.9))}
+.blog-cat{position:absolute;top:.85rem;left:.85rem;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:.28rem .75rem;border-radius:999px;z-index:2}
+.blog-cat.economics{background:rgba(240,192,64,.18);color:var(--gold);border:1px solid rgba(240,192,64,.35)}
+.blog-cat.geopolitics{background:rgba(239,68,68,.18);color:#f87171;border:1px solid rgba(239,68,68,.35)}
+.blog-cat.finance{background:rgba(61,186,111,.18);color:var(--green);border:1px solid rgba(61,186,111,.35)}
+.blog-cat.crisis{background:rgba(249,115,22,.18);color:var(--amber);border:1px solid rgba(249,115,22,.35)}
+.blog-body{padding:1.4rem 1.6rem;flex:1;display:flex;flex-direction:column}
+.blog-body h3{font-size:1.05rem;line-height:1.35;margin-bottom:.55rem;color:var(--cream);font-family:'Playfair Display',serif}
+.blog-body p{font-size:.85rem;color:var(--muted);line-height:1.68;flex:1}
+.blog-meta{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;padding-top:.85rem;border-top:1px solid var(--border)}
+.blog-read-time{font-size:.74rem;color:var(--muted);font-family:'Space Mono',monospace}
+.blog-arrow{width:32px;height:32px;border-radius:50%;background:var(--gold-glow);border:1px solid rgba(240,192,64,.2);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:.8rem;transition:all .25s}
+.blog-card:hover .blog-arrow{background:var(--gold);color:var(--black);transform:translateX(3px)}
+
+/* ══ ARTICLE MODAL ════════════════════════════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:5000;display:none;align-items:flex-start;justify-content:center;padding:2rem 1rem;overflow-y:auto;backdrop-filter:blur(8px)}
+.modal-overlay.open{display:flex;animation:modalIn .3s ease}
+@keyframes modalIn{from{opacity:0}to{opacity:1}}
+.modal-box{background:var(--s0);border:1px solid var(--border);border-radius:24px;max-width:800px;width:100%;margin:auto;box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 0 1px rgba(240,192,64,.1);animation:modalSlide .35s cubic-bezier(.22,1,.36,1)}
+@keyframes modalSlide{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{padding:2rem 2.5rem 1.2rem;border-bottom:1px solid var(--border);position:relative}
+.modal-cat{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:.6rem;display:block}
+.modal-title{font-size:clamp(1.4rem,3vw,2rem);line-height:1.2;color:var(--cream);font-family:'Playfair Display',serif}
+.modal-close{position:absolute;top:1.5rem;right:1.5rem;background:var(--s1);border:1px solid var(--s3);color:var(--muted);width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:var(--red);border-color:var(--red);color:#fff}
+.modal-content{padding:2rem 2.5rem 2.5rem;font-size:.97rem;color:var(--muted);line-height:1.9}
+.modal-content h2{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--cream);margin:2rem 0 .75rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+.modal-content h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);margin:1.5rem 0 .5rem}
+.modal-content p{margin-bottom:1.1rem}
+.modal-content ul{padding-left:1.4rem;margin-bottom:1.1rem}
+.modal-content li{margin-bottom:.45rem}
+.modal-content strong{color:var(--text)}
+.modal-content blockquote{border-left:3px solid var(--green);padding-left:1.1rem;margin:1.4rem 0;font-family:'Lora',serif;font-style:italic;color:var(--muted);opacity:.9}
+.modal-content .highlight-box{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.4rem;margin:1.4rem 0}
+.modal-content .stat-row{display:flex;flex-wrap:wrap;gap:1rem;margin:1.2rem 0}
+.modal-content .mini-stat{flex:1;min-width:120px;text-align:center;background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:.9rem;font-size:.8rem;color:var(--muted)}
+.modal-content .mini-stat strong{display:block;font-size:1.4rem;font-family:'Playfair Display',serif;color:var(--gold);margin-bottom:.2rem}
+.modal-meta{display:flex;align-items:center;gap:.85rem;flex-wrap:wrap;margin-top:.85rem}
+.modal-meta-chip{font-size:.73rem;padding:.2rem .65rem;border-radius:999px;background:var(--s1);border:1px solid var(--s3);color:var(--muted);font-family:'Space Mono',monospace}
+
+/* ══ GAME THEORY ════════════════════════════════ */
 #game-theory{padding:0}
 .gt-hero{position:relative;overflow:hidden;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center}
 .gt-bg{position:absolute;inset:0;background:radial-gradient(ellipse 75% 60% at 50% 40%,rgba(61,186,111,.11),transparent 70%),var(--black)}
@@ -181,11 +257,11 @@ header{position:sticky;top:0;z-index:1000;background:var(--glass);backdrop-filte
 .gt-inner{position:relative;z-index:2;padding:4rem 1.5rem}
 .gt-inner h1{font-size:clamp(1.8rem,4.2vw,3.6rem);margin-bottom:1rem;color:var(--gold)}
 .gt-inner p{color:var(--muted);font-size:1.06rem;max-width:600px;margin:0 auto 2.4rem}
-.launch-btn{display:inline-flex;align-items:center;gap:.7rem;background:linear-gradient(135deg,var(--green-dim),var(--green));color:var(--black) !important;padding:15px 36px;border-radius:999px;font-weight:700;font-size:1.04rem;box-shadow:0 0 40px rgba(61,186,111,.42);transition:transform .2s,box-shadow .2s}
+.launch-btn{display:inline-flex;align-items:center;gap:.7rem;background:linear-gradient(135deg,var(--green-dim),var(--green));color:var(--black)!important;padding:15px 36px;border-radius:999px;font-weight:700;font-size:1.04rem;box-shadow:0 0 40px rgba(61,186,111,.42);transition:transform .2s,box-shadow .2s}
 .launch-btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 0 65px rgba(61,186,111,.62)}
 .gt-note{margin-top:1rem;font-size:.87rem;color:var(--muted)}
 
-/* ═══ STOPWATCH  ←  fixed z-index stack ════════ */
+/* ══ STOPWATCH ════════════════════════════════════ */
 #stopwatch{position:relative;overflow:hidden;min-height:calc(100vh - 80px);font-family:'Lora',serif;color:#fff;background:#000}
 #stopwatch video#bg-video{position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;width:auto;height:auto;transform:translate(-50%,-50%);object-fit:cover;z-index:0}
 #stopwatch .overlay{position:absolute;inset:0;background:rgba(0,15,50,.6);z-index:1}
@@ -203,33 +279,41 @@ header{position:sticky;top:0;z-index:1000;background:var(--glass);backdrop-filte
 #stopwatch .laps-list li:last-child{border-radius:0 0 12px 12px}
 .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 
-/* ═══ JOIN THE JOURNEY  (contact form) ══════════ */
+/* ══ CONTACT FORM ════════════════════════════════ */
 #join-journey{padding:5rem 0 6rem}
-.form-wrapper{max-width:660px;margin:0 auto;background:var(--s0);border:1px solid var(--border);border-radius:24px;padding:3rem 3.5rem;box-shadow:0 24px 64px rgba(0,0,0,.4)}
+.form-wrapper{max-width:660px;margin:0 auto;background:var(--s0);border:1px solid var(--border);border-radius:24px;padding:3rem 3.5rem;box-shadow:0 24px 64px rgba(0,0,0,.4);position:relative;overflow:hidden}
+.form-wrapper::before{content:'';position:absolute;bottom:-80px;right:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(61,186,111,.07),transparent 70%);pointer-events:none}
 .form-wrapper .fw-title{font-size:clamp(1.55rem,2.8vw,2.2rem);color:var(--gold);margin-bottom:.45rem}
 .form-sub{color:var(--muted);font-size:.97rem;margin-bottom:2.1rem;line-height:1.7}
 .form-group{margin-bottom:1.45rem}
 .form-group label{display:block;font-size:.79rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:.48rem}
-.form-group input,.form-group textarea{width:100%;background:var(--s1);border:1px solid var(--s3);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.96rem;padding:.82rem 1.1rem;border-radius:12px;outline:none;transition:border-color .25s,box-shadow .25s;resize:vertical}
+/* Uiverse-style input with animated border */
+.form-group input,.form-group textarea{width:100%;background:var(--s1);border:1px solid var(--s3);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.96rem;padding:.82rem 1.1rem;border-radius:12px;outline:none;transition:border-color .25s,box-shadow .25s,background .25s;resize:vertical}
 .form-group input::placeholder,.form-group textarea::placeholder{color:var(--muted);opacity:.7}
-.form-group input:focus,.form-group textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,192,64,.14)}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,192,64,.14),0 0 15px rgba(240,192,64,.06);background:var(--s0)}
 .form-group textarea{min-height:138px}
-.submit-btn{width:100%;background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:var(--black);font-weight:700;font-size:1rem;padding:14px 24px;border-radius:999px;border:none;cursor:pointer;box-shadow:0 6px 24px rgba(240,192,64,.38);transition:transform .2s,box-shadow .2s,opacity .2s;font-family:'DM Sans',sans-serif;letter-spacing:.02em}
+.submit-btn{width:100%;background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:var(--black);font-weight:700;font-size:1rem;padding:14px 24px;border-radius:999px;border:none;cursor:pointer;box-shadow:0 6px 24px rgba(240,192,64,.38);transition:transform .2s,box-shadow .2s,opacity .2s;font-family:'DM Sans',sans-serif;letter-spacing:.02em;position:relative;overflow:hidden}
+.submit-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);transform:translateX(-100%);transition:transform .5s}
+.submit-btn:hover::after{transform:translateX(100%)}
 .submit-btn:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(240,192,64,.52)}
 .submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .form-toast{display:none;margin-top:1.4rem;padding:.9rem 1.2rem;border-radius:12px;font-size:.93rem;font-weight:500;text-align:center}
 .form-toast.success{display:block;background:rgba(61,186,111,.11);border:1px solid rgba(61,186,111,.32);color:var(--green)}
 .form-toast.error{display:block;background:rgba(239,68,68,.11);border:1px solid rgba(239,68,68,.32);color:var(--red)}
 
-/* ═══ FOOTER ═════════════════════════════════════ */
+/* ══ FOOTER ══════════════════════════════════════ */
 footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5rem 2rem}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1.5fr;gap:3rem;max-width:1100px;margin:0 auto}
 .footer-brand{font-size:1.5rem;color:var(--gold);margin-bottom:.6rem}
 .footer-brand span{color:var(--green)}
 .footer-about p{font-size:.92rem;color:var(--muted);margin-bottom:1.35rem}
 .socials{display:flex;gap:.65rem}
-.social-a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--s1);border:1px solid var(--s3);font-size:1.05rem;transition:background .2s,transform .2s,border-color .2s}
-.social-a:hover{background:var(--gold);color:var(--black) !important;border-color:var(--gold);transform:translateY(-3px)}
+/* Uiverse social button */
+.social-a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--s1);border:1px solid var(--s3);font-size:1.05rem;transition:all .25s;position:relative;overflow:hidden}
+.social-a::before{content:'';position:absolute;inset:0;border-radius:50%;background:var(--gold);transform:scale(0);transition:transform .25s}
+.social-a:hover::before{transform:scale(1)}
+.social-a:hover{color:var(--black)!important;border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 20px rgba(240,192,64,.3)}
+.social-a span{position:relative;z-index:1}
 .footer-links h4,.footer-contact h4{font-size:.95rem;font-weight:700;margin-bottom:.95rem;color:var(--text)}
 .footer-links ul{list-style:none}
 .footer-links li{margin-bottom:.52rem}
@@ -239,7 +323,7 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
 .footer-contact svg{width:15px;height:15px;flex-shrink:0;margin-top:.3rem}
 .footer-bottom{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:.81rem;color:var(--muted)}
 
-/* ═══ RESPONSIVE ══════════════════════════════════ */
+/* ══ RESPONSIVE ══════════════════════════════════ */
 @media(max-width:768px){
   .nav-links{display:none}
   .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--s0);padding:1rem;gap:.18rem;z-index:999;border-bottom:1px solid var(--border)}
@@ -255,12 +339,40 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
   .stat-item{border-right:none !important;border-bottom:1px solid var(--border);width:50%}
   .intro-card,.form-wrapper{padding:2rem 1.4rem}
   #stopwatch .time-display{font-size:3rem;letter-spacing:4px}
+  .modal-header,.modal-content{padding:1.5rem}
+  .modal-content .stat-row{flex-direction:column}
 }
+
+/* ══ SCROLL PROGRESS BAR ══════════════════════════ */
+#scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold-dim),var(--gold),var(--green));z-index:9999;width:0%;transition:width .1s linear;border-radius:0 2px 2px 0}
+
+/* ══ TOAST NOTIFICATION ══════════════════════════ */
+#toast-notif{position:fixed;bottom:2rem;right:2rem;background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:.9rem 1.3rem;font-size:.87rem;color:var(--text);z-index:8000;transform:translateY(100px);opacity:0;transition:all .4s cubic-bezier(.22,1,.36,1);box-shadow:0 16px 40px rgba(0,0,0,.4);max-width:300px}
+#toast-notif.show{transform:translateY(0);opacity:1}
   </style>
 </head>
 <body data-theme="dark">
 
-<!-- ═══ HEADER ═════════════════════════════════════════════════ -->
+<!-- ══ SCROLL PROGRESS ══════════════════════════════════════ -->
+<div id="scroll-progress"></div>
+
+<!-- ══ ARTICLE MODAL ══════════════════════════════════════ -->
+<div class="modal-overlay" id="articleModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-cat" id="modalCat"></span>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <div class="modal-meta" id="modalMeta"></div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ══ TOAST ══════════════════════════════════════════════ -->
+<div id="toast-notif"></div>
+
+<!-- ══ HEADER ══════════════════════════════════════════════ -->
 <header>
   <div class="container">
     <nav class="nav-flex">
@@ -281,11 +393,11 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
             <a href="#" onclick="showPage('game-theory');closeMobile();return false;">Game Theory</a>
           </div>
         </li>
-        <li><a href="#">Blogs</a></li>
+        <li><a href="#" onclick="showPage('blogs');closeMobile();return false;">Blogs</a></li>
         <li><a href="economic-news.html">Economic News</a></li>
         <li><a href="#" onclick="showPage('stopwatch');closeMobile();return false;">Stopwatch</a></li>
         <li><button class="theme-btn" id="themeBtn" aria-label="Toggle theme" onclick="toggleTheme()">☀️</button></li>
-        <li><a href="#" class="pill-btn" onclick="showPage('join-journey');closeMobile();return false;">Join the Journey →</a></li>
+        <li><a href="#" class="btn-pulse" onclick="showPage('join-journey');closeMobile();return false;">Join the Journey →</a></li>
       </ul>
       <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMobile()">
         <span></span><span></span><span></span>
@@ -296,7 +408,7 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
 
 <main>
 
-<!-- ── HOME ─────────────────────────────────────────────────── -->
+<!-- ══ HOME ════════════════════════════════════════════════ -->
 <div id="home" class="page active">
   <div class="hero-bg"></div>
   <div class="hero-orb"></div>
@@ -330,9 +442,9 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
     <p class="hero-tagline">I explore the intersection of rigorous financial strategy and community stewardship from Kathmandu.</p>
     <blockquote class="hero-quote">"I believe mastery is not a destination, but a tool used to give back to the valley that raised me…"</blockquote>
     <div class="hero-ctas">
-      <a href="#" class="cta-gold" onclick="showPage('my-journey');return false;">Continue reading my journey</a>
-      <a href="#" class="cta-green" onclick="showPage('join-journey');return false;">Join the Journey →</a>
-      <a href="#" class="cta-ghost" onclick="showPage('introduction');return false;">Introduction</a>
+      <a href="#" class="btn-shimmer" onclick="showPage('my-journey');return false;">Continue reading my journey</a>
+      <a href="#" class="btn-glow" onclick="showPage('join-journey');return false;">Join the Journey →</a>
+      <a href="#" class="btn-neon" onclick="showPage('introduction');return false;">Introduction</a>
     </div>
     <div class="hero-stats">
       <div class="stat-item"><div class="stat-num g">#1</div><div class="stat-lbl">All Nepal Rank<br>CAP II</div></div>
@@ -344,7 +456,7 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
   <div class="scroll-cue"><span>Scroll</span><div class="scroll-line"></div></div>
 </div>
 
-<!-- ── INTRODUCTION ──────────────────────────────────────────── -->
+<!-- ══ INTRODUCTION ════════════════════════════════════════ -->
 <div id="introduction" class="page">
   <section style="padding:6rem 0 5rem">
     <div class="container">
@@ -375,7 +487,7 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
   </section>
 </div>
 
-<!-- ── MY JOURNEY ────────────────────────────────────────────── -->
+<!-- ══ MY JOURNEY ══════════════════════════════════════════ -->
 <div id="my-journey" class="page">
   <section style="padding:5rem 0">
     <div class="container">
@@ -390,12 +502,10 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
       <div class="about-prose reveal" style="margin-top:-1.5rem">
         <p>On the skills front, I enjoy <strong>project management, event planning</strong>, and getting my head around <strong>tax matters</strong>. I've picked up a couple of honors along the way: The Best Student of the Year and a Silver Medal in the National Business Case Analysis.</p>
       </div>
-
       <div class="section-header reveal" style="margin-top:4rem;margin-bottom:2.5rem">
         <div class="section-eyebrow gr">Academic Path</div>
         <h2 class="section-title" style="color:var(--gold)">Education Journey</h2>
       </div>
-
       <div class="timeline">
         <div class="tl-line"></div>
         <div class="tl-item right reveal">
@@ -412,7 +522,6 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
             <h3>CAP I</h3>
             <p><strong>Institute of Chartered Accountants of Nepal (ICAN)</strong></p>
             <p>Passed with Distinction, December 2023</p>
-            <p>Achieved distinction in the first level of Chartered Accountancy</p>
             <span class="badge gr">✨ Distinction</span>
           </div>
           <div class="tl-dot"></div><div class="tl-empty"></div>
@@ -422,7 +531,7 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
           <div class="tl-card">
             <h3>BBS (Bachelor of Business Studies)</h3>
             <p><strong>Shanker Dev Campus, Tribhuvan University</strong></p>
-            <p>Currently pursuing undergraduate degree in Business Studies (2024 onwards)</p>
+            <p>Currently pursuing undergraduate degree (2024 onwards)</p>
             <span class="badge am">📚 Ongoing</span>
           </div>
         </div>
@@ -430,8 +539,7 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
           <div class="tl-card">
             <h3>XII (Higher Secondary Education)</h3>
             <p><strong>Global College of Management</strong></p>
-            <p>GPA 3.84</p>
-            <p>Completed higher secondary education with a focus on management (2023)</p>
+            <p>GPA 3.84 · Completed 2023</p>
           </div>
           <div class="tl-dot"></div><div class="tl-empty"></div>
         </div>
@@ -440,27 +548,16 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
           <div class="tl-card">
             <h3>SEE (Secondary Education Examination)</h3>
             <p><strong>Awareness International Academy</strong></p>
-            <p>GPA 4.00</p>
-            <p>Completed secondary education with excellence (2022)</p>
+            <p>GPA 4.00 · Completed 2022</p>
             <span class="badge g">⭐ Perfect GPA</span>
           </div>
         </div>
-      </div>
-
-      <div style="text-align:center;margin:4rem auto 0;max-width:580px" class="reveal">
-        <p style="color:var(--muted)">
-          If you'd like to connect, drop me a line at
-          <a href="mailto:abhishekgau1am@gmail.com" style="color:var(--gold)">abhishekgau1am@gmail.com</a><br>
-          or find me on LinkedIn:
-          <a href="https://linkedin.com/in/abhishek8848" target="_blank" style="color:var(--green)">linkedin.com/in/abhishek8848</a>.<br><br>
-          Looking forward to chatting about finance, events, or just life in Kathmandu!
-        </p>
       </div>
     </div>
   </section>
 </div>
 
-<!-- ── ACHIEVEMENTS ──────────────────────────────────────────── -->
+<!-- ══ ACHIEVEMENTS ════════════════════════════════════════ -->
 <div id="achievements" class="page">
   <section style="padding:5rem 0">
     <div class="container">
@@ -487,19 +584,95 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
           </div>
         </div>
       </div>
-      <div style="text-align:center;margin:5rem auto 0;max-width:580px" class="reveal">
-        <p style="color:var(--muted)">
-          If you'd like to connect, drop me a line at
-          <a href="mailto:abhishekgau1am@gmail.com" style="color:var(--gold)">abhishekgau1am@gmail.com</a><br>
-          or find me on LinkedIn:
-          <a href="https://linkedin.com/in/abhishek8848" target="_blank" style="color:var(--green)">linkedin.com/in/abhishek8848</a>.
-        </p>
+    </div>
+  </section>
+</div>
+
+<!-- ══ BLOGS ════════════════════════════════════════════════ -->
+<div id="blogs" class="page">
+  <section style="padding:5rem 0 6rem">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Perspectives</div>
+        <h2 class="section-title">Financial &amp; Economic Insights</h2>
+        <p class="section-sub">Deep dives into economics, geopolitics, and the forces reshaping global finance.</p>
+      </div>
+      <div class="blog-grid">
+
+        <!-- Article 1 -->
+        <div class="blog-card reveal" onclick="openArticle('nepal-gdp')">
+          <div class="blog-cover" style="background:linear-gradient(135deg,#1a3a2a,#0d1f15)">
+            <div class="blog-cover-inner">🏔️</div>
+            <div class="blog-cover-overlay"></div>
+            <span class="blog-cat economics">Economics</span>
+          </div>
+          <div class="blog-body">
+            <h3>Nepal's Road to $100 Billion GDP: A Vision for Economic Transformation</h3>
+            <p>Can Nepal triple its economy in a generation? A comprehensive look at the structural reforms, sectoral bets, and political will required to cross the $100B threshold.</p>
+            <div class="blog-meta">
+              <span class="blog-read-time">12 min read</span>
+              <div class="blog-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article 2 -->
+        <div class="blog-card reveal" style="transition-delay:.1s" onclick="openArticle('middle-east')">
+          <div class="blog-cover" style="background:linear-gradient(135deg,#3a1a1a,#1f0d0d)">
+            <div class="blog-cover-inner">🌍</div>
+            <div class="blog-cover-overlay"></div>
+            <span class="blog-cat geopolitics">Geopolitics</span>
+          </div>
+          <div class="blog-body">
+            <h3>A World Fractured: Middle East Tensions and Their Continental Ripple Effects</h3>
+            <p>From energy shocks in Europe to supply chain disruptions in Asia — a continent-by-continent analysis of how Middle East instability reshapes the entire planet.</p>
+            <div class="blog-meta">
+              <span class="blog-read-time">15 min read</span>
+              <div class="blog-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article 3 -->
+        <div class="blog-card reveal" style="transition-delay:.2s" onclick="openArticle('new-instruments')">
+          <div class="blog-cover" style="background:linear-gradient(135deg,#1a2a3a,#0d1520)">
+            <div class="blog-cover-inner">⚡</div>
+            <div class="blog-cover-overlay"></div>
+            <span class="blog-cat finance">Finance</span>
+          </div>
+          <div class="blog-body">
+            <h3>The Next Financial Revolution: Instruments That Will Reshape the Global Economy</h3>
+            <p>Beyond crypto hype — exploring tokenized real-world assets, parametric insurance, nature-backed securities and other instruments poised to be as consequential as MBS were in 2008.</p>
+            <div class="blog-meta">
+              <span class="blog-read-time">14 min read</span>
+              <div class="blog-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article 4 -->
+        <div class="blog-card reveal" style="transition-delay:.3s" onclick="openArticle('crisis-2008')">
+          <div class="blog-cover" style="background:linear-gradient(135deg,#2a1a0a,#150d05)">
+            <div class="blog-cover-inner">📉</div>
+            <div class="blog-cover-overlay"></div>
+            <span class="blog-cat crisis">Crisis</span>
+          </div>
+          <div class="blog-body">
+            <h3>Anatomy of a Meltdown: The 2008 Global Financial Crisis</h3>
+            <p>How a $12 trillion global meltdown was built, brick by brick, on deregulation, greed, and the weaponization of complexity — and what it still teaches us today.</p>
+            <div class="blog-meta">
+              <span class="blog-read-time">16 min read</span>
+              <div class="blog-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 </div>
 
-<!-- ── GAME THEORY ───────────────────────────────────────────── -->
+<!-- ══ GAME THEORY ══════════════════════════════════════════ -->
 <div id="game-theory" class="page">
   <div class="gt-hero">
     <div class="gt-bg"></div>
@@ -517,7 +690,7 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
   </div>
 </div>
 
-<!-- ── STOPWATCH ─────────────────────────────────────────────── -->
+<!-- ══ STOPWATCH ════════════════════════════════════════════ -->
 <div id="stopwatch" class="page">
   <video id="bg-video" autoplay muted loop playsinline>
     <source src="https://cdn.pixabay.com/video/2022/08/13/127713-739309133_large.mp4" type="video/mp4">
@@ -540,7 +713,7 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
   </div>
 </div>
 
-<!-- ── JOIN THE JOURNEY ──────────────────────────────────────── -->
+<!-- ══ JOIN THE JOURNEY ════════════════════════════════════ -->
 <div id="join-journey" class="page">
   <section style="padding:5rem 0 6rem">
     <div class="container">
@@ -573,17 +746,17 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
 
 </main>
 
-<!-- ═══ FOOTER ══════════════════════════════════════════════════ -->
+<!-- ══ FOOTER ════════════════════════════════════════════════ -->
 <footer>
   <div class="footer-grid">
     <div class="footer-about">
       <div class="brand footer-brand">Abhishek<span>.</span></div>
       <p>Chartered Accountancy student with expertise in audit, accounting, taxation, and finance.</p>
       <div class="socials">
-        <a class="social-a" href="https://x.com/Chandra43104852" target="_blank" aria-label="X">𝕏</a>
-        <a class="social-a" href="https://www.linkedin.com/in/abhishek8848/" target="_blank" aria-label="LinkedIn">in</a>
-        <a class="social-a" href="https://www.facebook.com/chandramani.gautam.545" target="_blank" aria-label="Facebook">f</a>
-        <a class="social-a" href="https://www.instagram.com/imabhiiii_/" target="_blank" aria-label="Instagram">📷</a>
+        <a class="social-a" href="https://x.com/Chandra43104852" target="_blank" aria-label="X"><span>𝕏</span></a>
+        <a class="social-a" href="https://www.linkedin.com/in/abhishek8848/" target="_blank" aria-label="LinkedIn"><span>in</span></a>
+        <a class="social-a" href="https://www.facebook.com/chandramani.gautam.545" target="_blank" aria-label="Facebook"><span>f</span></a>
+        <a class="social-a" href="https://www.instagram.com/imabhiiii_/" target="_blank" aria-label="Instagram"><span>📷</span></a>
       </div>
     </div>
     <div class="footer-links">
@@ -593,7 +766,7 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
         <li><a href="#" onclick="showPage('introduction');return false;">Introduction</a></li>
         <li><a href="#" onclick="showPage('my-journey');return false;">My Journey</a></li>
         <li><a href="#" onclick="showPage('achievements');return false;">Achievements</a></li>
-        <li><a href="#">Blogs</a></li>
+        <li><a href="#" onclick="showPage('blogs');return false;">Blogs</a></li>
         <li><a href="#" onclick="showPage('game-theory');return false;">Game Theory</a></li>
         <li><a href="#" onclick="showPage('join-journey');return false;">Contact</a></li>
       </ul>
@@ -608,28 +781,310 @@ footer{background:var(--s0);border-top:1px solid var(--border);padding:4rem 1.5r
   <div class="footer-bottom"><p>© 2026 Abhishek Gautam. All rights reserved.</p></div>
 </footer>
 
-<!-- ═══ SCRIPTS ══════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════════
+     ARTICLE DATA
+══════════════════════════════════════════════════════════ -->
 <script>
+const ARTICLES = {
+  'nepal-gdp': {
+    cat: '🇳🇵 Economics',
+    title: "Nepal's Road to $100 Billion GDP: A Vision for Economic Transformation",
+    meta: ['12 min read', 'March 2026', 'Abhishek Gautam'],
+    content: `
+<p>Nepal's GDP currently hovers around <strong>$40–45 billion USD</strong> (nominal). To cross the $100 billion threshold would mean more than doubling its economy — a challenge that demands structural transformation, not just incremental growth. Yet the aspiration is not delusional. Countries like Bangladesh and Vietnam accomplished comparable leaps within a generation. The question is: what would it take for Nepal to chart the same course?</p>
+
+<div class="stat-row">
+  <div class="mini-stat"><strong>~$42B</strong>Current GDP (2025 est.)</div>
+  <div class="mini-stat"><strong>$100B</strong>Target threshold</div>
+  <div class="mini-stat"><strong>~8–9%</strong>Annual growth needed</div>
+  <div class="mini-stat"><strong>~2035</strong>Realistic target year</div>
+</div>
+
+<h2>I. The Foundation: Where Nepal Stands</h2>
+<p>Nepal is classified as a Least Developed Country (LDC), with a per capita income of roughly $1,200. Agriculture employs nearly two-thirds of the population but contributes less than a quarter of GDP. Remittances — sent home by Nepalis working in the Gulf, Malaysia, India, and beyond — account for approximately 25–27% of GDP, making Nepal one of the most remittance-dependent economies in the world. This dependence is both a lifeline and a vulnerability: it papers over structural weaknesses in domestic productivity and exposes the economy to external shocks.</p>
+<p>Inflation has been structurally elevated, political instability has been chronic (Nepal has had over a dozen governments since 2008), and infrastructure bottlenecks — from roads to electricity — have consistently constrained private investment. The 2015 earthquake further set back capital accumulation.</p>
+
+<h2>II. The Five Pillars of a $100B Economy</h2>
+
+<h3>1. Hydropower: The Himalayan Advantage</h3>
+<p>Nepal possesses an estimated <strong>83,000 MW of technically feasible hydropower potential</strong>, of which only about 2,200 MW has been harnessed. This is perhaps the single greatest untapped economic asset in South Asia. A credible hydropower build-out — exporting electricity to India and Bangladesh — could generate billions annually in export earnings, slash domestic energy costs, attract energy-intensive industry, and catalyze rural electrification that enables the digitization of small business.</p>
+<p>The Upper Tamakoshi project demonstrated what is possible. Scaling from 2,200 MW to even 10,000 MW over the next decade would be transformative. The critical enablers are cross-border transmission infrastructure, bankable power purchase agreements, and reform of Nepal Electricity Authority's operational model.</p>
+
+<h3>2. Tourism: Beyond Everest Base Camp</h3>
+<p>Nepal welcomed roughly 1.1 million international tourists in 2023, recovering from COVID lows. But the ceiling is far higher. Countries with comparable natural and cultural assets attract 5–10 million visitors annually. Nepal's tourism potential spans trekking and mountaineering, cultural circuits (Lumbini, Pashupatinath, Pokhara), adventure sports, and wellness/yoga retreats.</p>
+
+<div class="highlight-box">
+<strong>Tourism Scenario:</strong> If Nepal can grow tourist arrivals to 3 million by 2030 — with average spending of $1,500 per visitor — that alone generates $4.5 billion annually in direct receipts, with a multiplier effect across hospitality, transport, and handicrafts.
+</div>
+
+<h3>3. Agriculture Modernization: From Subsistence to Value Chain</h3>
+<p>Nepal's agricultural sector is characterized by low yields, fragmented landholdings, and minimal post-harvest infrastructure. Modernizing it through irrigation investment, mechanization cooperatives, cold chain logistics, and branding of high-value exports (cardamom, orthodox tea, honey, pashmina, medicinal herbs) could significantly lift rural incomes and reduce the pressure to emigrate.</p>
+<p>Nepal is already the world's largest producer of large cardamom. With the right processing infrastructure and market access, it could command premium prices globally. This is the kind of value-chain agriculture that transformed parts of Ethiopia and Rwanda.</p>
+
+<h3>4. Channeling the Diaspora: Remittances Into Investment</h3>
+<p>The Nepali diaspora sends home over $10 billion annually. The challenge is converting consumption-oriented remittances into productive capital. Instruments like <strong>Diaspora Bonds</strong> (as used by India and Israel), targeted investment matching programs, and dual citizenship for Non-Resident Nepalis (NRNs) could redirect even 10–15% of remittance flows into business investment — adding $1–1.5 billion to annual productive investment.</p>
+
+<h3>5. Digital Economy and BPO/IT Services</h3>
+<p>Nepal has a young, English-literate, tech-hungry population. The IT sector has grown quietly but steadily. With targeted investment in digital infrastructure (reliable internet, electricity), software parks modeled on India's early STPI scheme, and a regulatory environment friendly to startups and fintech, Nepal could carve out a niche in the global digital economy — following the path of countries like the Philippines in BPO or Estonia in e-governance.</p>
+
+<h2>III. The Political Economy Problem</h2>
+<p>Every analysis of Nepal's potential eventually runs into the same wall: political fragmentation. Nepal's constitutional federalism, while democratically important, has created three-tier governance complexity that slows project approvals, creates jurisdictional confusion over land and water rights, and enables rent-seeking at multiple levels.</p>
+<p>A $100 billion economy requires institutional quality as much as natural endowments. This means judicial reform to enforce contracts, anti-corruption mechanisms with real teeth, civil service professionalization, and long-term fiscal planning that survives changes in government. These are not technical problems — they are political ones, requiring sustained elite consensus.</p>
+
+<h2>IV. External Alignment: India, China, and the Geopolitical Dividend</h2>
+<p>Nepal sits between the world's two most populous countries — a geography that is simultaneously a constraint and an opportunity. The Belt and Road Initiative connectivity with China and deepening trade integration with India could give Nepal access to massive markets. The proposed Trans-Himalayan Multidimensional Connectivity Network, if realized, would transform Nepal from a landlocked country into a <em>land-linked</em> one.</p>
+<p>Navigating this geopolitical position with strategic autonomy — extracting economic benefit without compromising sovereignty — is one of the defining challenges of Nepali statecraft in this decade.</p>
+
+<h2>V. The Verdict</h2>
+<p>A $100 billion GDP for Nepal is achievable within a decade — but only under conditions of sustained political stability, aggressive infrastructure investment (particularly hydropower), tourism scaling, and institutional reform. It requires treating economic development as a national project, not a partisan football.</p>
+
+<blockquote>The mountains gave Nepal its identity. Water, tourism, and technology can give it its prosperity. The choice — and the will — must come from within.</blockquote>
+
+<p>The path exists. Whether Nepal chooses to walk it is the defining question of this generation.</p>
+    `
+  },
+
+  'middle-east': {
+    cat: '🌐 Geopolitics',
+    title: 'A World Fractured: Middle East Tensions and Their Continental Ripple Effects',
+    meta: ['15 min read', 'March 2026', 'Abhishek Gautam'],
+    content: `
+<p>The Middle East has always been the world's pressure valve — a region whose internal dynamics generate shockwaves felt on every continent. The post-2023 period has seen an intensification of these tensions: the conflict in Gaza, heightened Iran-Israel confrontation, Houthi attacks disrupting Red Sea shipping, and continuing instability in Syria, Yemen, and Iraq. The consequences are not local. They are planetary.</p>
+
+<div class="stat-row">
+  <div class="mini-stat"><strong>~21%</strong>of world oil through Strait of Hormuz</div>
+  <div class="mini-stat"><strong>~12%</strong>global trade via Red Sea</div>
+  <div class="mini-stat"><strong>$10B+</strong>monthly shipping cost increase</div>
+  <div class="mini-stat"><strong>6</strong>Continents affected</div>
+</div>
+
+<h2>I. The Anatomy of the Crisis</h2>
+<p>The current wave of Middle East instability is multi-layered. At its core is the unresolved Israeli-Palestinian conflict, which erupted with catastrophic force in October 2023 and has since drawn in regional actors — Iran's "Axis of Resistance" comprising Hezbollah, the Houthis, Hamas, and various Iraqi militias. Meanwhile, Iran's nuclear program has pushed regional nuclear anxiety to levels not seen since the Cold War. And the fracturing of post-Arab Spring state authority has created governance vacuums that extremist groups continue to exploit.</p>
+<p>The result is a region where multiple conflict theatres are simultaneously active, energy infrastructure is under persistent threat, and great power competition (US, Russia, China) is playing out through proxy dynamics.</p>
+
+<h2>II. Continental Impact Analysis</h2>
+
+<h3>🌍 Europe: Energy Shock and the Migration Surge</h3>
+<p>Europe has been perhaps the most directly exposed continent beyond the Middle East itself. The disruption of Red Sea shipping routes — triggered by Houthi drone and missile attacks on commercial vessels — forced dozens of shipping companies to reroute around the Cape of Good Hope, adding 10–14 days and significant cost to trade with Asia. European manufacturers, already battered by post-pandemic supply chains, faced renewed input cost inflation.</p>
+<p>Energy is the deeper wound. While Europe has dramatically reduced its Russian gas dependence since 2022, Middle East LNG and pipeline gas from the region remain significant. Sustained uncertainty around the Strait of Hormuz — through which a fifth of global oil flows — has kept European energy prices elevated and complicated the EU's industrial competitiveness agenda.</p>
+<p>Migration flows from Lebanon, Syria, and Yemen have intensified pressure on European asylum systems, fueling the rise of far-right parties in Germany, France, Italy, and the Netherlands. The political spillover from Middle East instability into European domestic politics is profound and growing.</p>
+
+<h3>🌏 Asia: Supply Chain Reconfiguration and Energy Anxiety</h3>
+<p>Asia is the world's largest importer of Middle Eastern oil and gas. China, India, Japan, and South Korea collectively source more than 60% of their petroleum from the region. Elevated oil prices function as a tax on Asian manufacturing — compressing margins, fueling inflation, and complicating monetary policy across central banks from Tokyo to Mumbai.</p>
+<p>For India specifically, the Middle East crisis is multi-dimensional. India's 8+ million diaspora workers in the Gulf are a primary source of remittances. Trade routes to Europe traverse the Red Sea. And India has complex relationships with both Israel and Iran. The Modi government has performed a careful balancing act: maintaining economic partnerships while avoiding hard alignment.</p>
+<p>China, meanwhile, is using the instability to position itself as a neutral broker (the China-brokered Saudi-Iran rapprochement of 2023 was a landmark moment) while expanding economic relationships across the region. The BRI continues to bind Middle Eastern economies more tightly to Chinese supply chains.</p>
+
+<h3>🌎 North America: Oil Markets and Strategic Overstretch</h3>
+<p>The United States is the critical external actor in the Middle East. The Biden-era attempt to reduce American footprint while maintaining commitments proved strategically incoherent; the Trump administration's second term has brought renewed assertiveness. American carrier strike groups are stationed in the Eastern Mediterranean and Persian Gulf, an expensive deployment that reflects continued strategic dependence.</p>
+<p>For the American economy, elevated oil prices are a double-edged sword. U.S. shale producers benefit from higher prices; consumers and manufacturers pay more. The Federal Reserve's inflation-fighting credibility is complicated by oil price shocks that monetary policy cannot directly address.</p>
+<p>Canada has seen increased defense spending pressures and diplomatic complications in its relationship with allied powers navigating different Middle East positions.</p>
+
+<h3>🌍 Africa: Food Inflation and Economic Vulnerability</h3>
+<p>Africa's exposure to the Middle East crisis is often overlooked but devastating for its most vulnerable populations. The disruption of grain exports from the Black Sea region (related to the Russia-Ukraine conflict but compounded by Middle East instability affecting shipping routes) has driven up food prices across the continent. Countries in the Horn of Africa, the Sahel, and North Africa — where food represents 50–60% of household budgets — have experienced acute food insecurity.</p>
+<p>North Africa's proximity creates additional exposure: Libya remains a failed state partly fueled by regional power competition; Egypt's Suez Canal revenues (a critical foreign exchange earner) have been disrupted; and Tunisia and Morocco face economic stress linked partly to energy price inflation.</p>
+<p>Sub-Saharan Africa's relationship with the Middle East also includes significant trade, investment, and Islamic finance flows — all affected by regional instability.</p>
+
+<h3>🌏 Oceania: Commodity Booms and Diplomatic Strain</h3>
+<p>Australia and New Zealand face indirect but meaningful impacts. Australia is a significant LNG exporter and has benefited from elevated energy prices — but its economic relationship with China means that Chinese economic slowdown induced by oil shocks creates secondary headwinds. The AUKUS security partnership adds an explicit defense dimension, drawing Australia into broader geopolitical alignments linked to Middle East dynamics.</p>
+
+<h3>🌎 Latin America: Oil Windfall and Shipping Disruption</h3>
+<p>Oil-producing nations — Venezuela (theoretically), Colombia, Brazil, Mexico — benefit from sustained high oil prices. Brazil's pre-salt deepwater fields have seen renewed investment interest. But the Cape of Good Hope rerouting of shipping has increased freight costs for Latin American exporters, particularly agricultural producers targeting European and Asian markets. Argentina, already in economic crisis, faces additional headwinds from elevated energy import costs.</p>
+
+<h2>III. The Global Financial System Under Stress</h2>
+<p>Beyond individual continents, the Middle East tensions are reshaping global financial flows. Gulf Sovereign Wealth Funds — Abu Dhabi Investment Authority, Saudi Arabia's PIF, Kuwait Investment Authority — collectively manage trillions in assets. Their risk appetite, portfolio allocation decisions, and willingness to deploy capital into Western versus non-Western markets are all affected by regional political conditions and their relationships with Western governments.</p>
+<p>The weaponization of oil in previous decades (1973, 1979) shaped global financial architecture. A contemporary crisis severe enough to trigger sustained supply disruption could force accelerated diversification of the global energy mix — a painful but potentially necessary shock to decarbonization timelines.</p>
+
+<h2>IV. The Path Forward</h2>
+<blockquote>The Middle East is not a regional problem with global consequences. It is a global problem with a regional address.</blockquote>
+<p>Sustainable de-escalation requires addressing root causes — Palestinian statehood, Iranian security concerns, Yemeni humanitarian catastrophe — not just managing symptoms. The international community's record on this is poor. But the economic costs of continued instability — measured in oil prices, shipping costs, food insecurity, and political destabilization — are a powerful incentive for more serious diplomatic engagement.</p>
+<p>For Nepal and other small, open economies, the lesson is clear: energy security, supply chain diversification, and food sovereignty are not luxury strategic concerns. They are existential ones in a world where a conflict 5,000 kilometers away can determine whether families can afford to eat.</p>
+    `
+  },
+
+  'new-instruments': {
+    cat: '⚡ Finance',
+    title: 'The Next Financial Revolution: Instruments That Will Reshape the Global Economy',
+    meta: ['14 min read', 'March 2026', 'Abhishek Gautam'],
+    content: `
+<p>In 1970, Lewis Ranieri at Salomon Brothers helped create the mortgage-backed security. By 2008, the instrument he pioneered had become a $13 trillion market whose implosion nearly brought down the global financial system. Financial innovation is neither inherently good nor bad — it is powerful, and power without governance is dangerous. As we look ahead, several emerging financial instruments have the potential to be as transformative — and as destabilizing — as MBS were in their time.</p>
+
+<div class="stat-row">
+  <div class="mini-stat"><strong>$10T+</strong>Tokenization market by 2030 (est.)</div>
+  <div class="mini-stat"><strong>$1.8T</strong>Green bond market 2025</div>
+  <div class="mini-stat"><strong>$500B</strong>Parametric insurance potential</div>
+  <div class="mini-stat"><strong>~180</strong>Sovereign digital currencies in development</div>
+</div>
+
+<h2>I. Tokenized Real-World Assets (RWAs): The Securitization Revolution 2.0</h2>
+<p>The original securitization revolution pooled illiquid mortgages into tradeable securities, democratizing access to real estate investment while hiding systemic risk in complexity. The tokenization of real-world assets promises to do the same for virtually every asset class — but with blockchain-based transparency replacing opaque structured finance.</p>
+<p>Tokenization converts ownership rights in physical or financial assets into digital tokens on a blockchain. A $50 million commercial building in Manhattan can be tokenized into 50 million tokens worth $1 each — allowing retail investors to hold fractional ownership, enabling 24/7 trading, and creating liquidity in historically illiquid markets.</p>
+<p>The asset classes being tokenized include:</p>
+<ul>
+  <li><strong>Real estate</strong> — fractional property ownership, reducing the barrier to real estate investment globally</li>
+  <li><strong>Private equity and venture capital</strong> — historically accessible only to institutional investors</li>
+  <li><strong>Commodities</strong> — gold, agricultural products, carbon credits</li>
+  <li><strong>Government bonds</strong> — the World Bank and several sovereigns have issued blockchain-based bonds</li>
+  <li><strong>Infrastructure assets</strong> — toll roads, airports, renewable energy installations</li>
+</ul>
+
+<div class="highlight-box">
+<strong>The MBS Parallel:</strong> Like MBS, RWA tokenization creates liquidity from illiquidity. Like MBS, it could democratize investment access. And like MBS, if the underlying asset valuations are inflated, if disclosure standards are weak, or if leverage is excessive, it could create systemic risk at scale. The governance architecture being built around tokenization will determine which of these futures materializes.
+</div>
+
+<h2>II. Natural Asset Companies (NACs): Monetizing the Biosphere</h2>
+<p>Perhaps the most radical financial innovation on the horizon, Natural Asset Companies are a proposed instrument that would allow natural ecosystems — forests, wetlands, coral reefs, watersheds — to be incorporated as companies whose primary asset is the "ecological services" they provide: carbon sequestration, water filtration, biodiversity, climate regulation.</p>
+<p>These companies could then list on stock exchanges, raising capital to fund conservation while compensating indigenous communities and landholders. The NYSE and Intrinsic Exchange Group were developing this framework before regulatory pushback paused it in the US — but the concept is advancing in other jurisdictions.</p>
+<p>The implications are staggering: if the world's remaining rainforests were valued as carbon sequestration and biodiversity assets, they would be worth many trillions of dollars — far more than their value as cleared agricultural land. A financial mechanism that makes intact ecosystems more valuable than destroyed ones would be transformative for both conservation and development finance.</p>
+
+<h2>III. Parametric Insurance: Paying Before the Disaster Unfolds</h2>
+<p>Traditional insurance requires loss assessment after a disaster — a slow, contested, often inadequate process. <strong>Parametric insurance</strong> pays out automatically when a measurable trigger is hit: a hurricane of Category 4 or above, rainfall below a specified threshold, a Richter 7.0 earthquake. No claims adjustment, no disputes — instant liquidity when it is most needed.</p>
+<p>The World Bank's Caribbean Catastrophe Risk Insurance Facility demonstrated this model after Hurricane Maria devastated Dominica in 2017 — payment was made within two weeks. Compare this to traditional insurance, which can take years to resolve.</p>
+<p>Scaling parametric insurance globally — particularly for climate-vulnerable developing countries — requires:</p>
+<ul>
+  <li>High-quality satellite and meteorological data (now available at unprecedented resolution)</li>
+  <li>Capital markets willing to take on parametric risk through catastrophe bonds (cat bonds)</li>
+  <li>Sovereign and multilateral willingness to pay premiums (often subsidized)</li>
+</ul>
+<p>For Nepal, parametric earthquake and flood insurance — automatically triggered by seismic readings or rainfall indices — could be transformative for disaster resilience.</p>
+
+<h2>IV. Central Bank Digital Currencies (CBDCs): Reprogrammable Money</h2>
+<p>Over 130 countries are exploring or actively developing CBDCs — digital versions of national currencies issued directly by central banks. Unlike cryptocurrencies, CBDCs are state-backed and centrally controlled. Unlike current digital money (which is commercial bank money), CBDCs are direct claims on the central bank.</p>
+<p>The economic implications are profound:</p>
+<ul>
+  <li><strong>Financial inclusion</strong> — unbanked populations could hold CBDCs in mobile wallets without needing a bank account</li>
+  <li><strong>Monetary policy precision</strong> — negative interest rates, helicopter money, and targeted stimulus become technically feasible</li>
+  <li><strong>Programmable money</strong> — CBDCs can be coded with conditions (spend within X months, use only for Y purposes)</li>
+  <li><strong>Cross-border payments</strong> — the mBridge project linking China, Hong Kong, Thailand, and UAE is already processing real transactions</li>
+</ul>
+<p>The geopolitical dimension is critical: a digital yuan that enables cross-border transactions without touching the US dollar system could, over time, erode dollar hegemony — the defining financial architecture of the post-Bretton Woods era.</p>
+
+<h2>V. Transition Finance Instruments: Funding the Green Pivot</h2>
+<p>The energy transition requires an estimated $4–6 trillion in annual investment by 2030. Green bonds, sustainability-linked bonds, and transition bonds are the instruments being deployed to mobilize this capital. But the frontier is more sophisticated:</p>
+<ul>
+  <li><strong>Debt-for-nature swaps</strong> — creditors forgive sovereign debt in exchange for conservation commitments (pioneered with Ecuador's Galápagos deal)</li>
+  <li><strong>Blue bonds</strong> — financing ocean conservation and sustainable fisheries</li>
+  <li><strong>Biodiversity credits</strong> — analogous to carbon credits but for habitat preservation</li>
+  <li><strong>Climate-linked sovereign bonds</strong> — coupon rates tied to achieving emissions targets</li>
+</ul>
+
+<h2>VI. The Systemic Risk Question</h2>
+<p>Every financial innovation solves a problem and creates new ones. MBS solved the problem of illiquid bank balance sheets and democratized mortgage access — then created the conditions for catastrophic systemic risk. The instruments described above are no different. Tokenization could concentrate DeFi risk. NACs could create perverse incentives for ecosystem valuation. CBDCs could enable unprecedented state surveillance of financial activity.</p>
+<blockquote>The lesson of financial history is not that innovation is dangerous. It is that innovation outpaces governance — and the gap between the two is where crises incubate.</blockquote>
+<p>The institutions tasked with governance — central banks, securities regulators, the FSB, the BIS — are moving faster than they did in the MBS era. But they are still running behind the pace of innovation. For students of finance entering the profession today, understanding both the transformative potential and the systemic risks of these new instruments is the defining professional challenge of the decade.</p>
+    `
+  },
+
+  'crisis-2008': {
+    cat: '📉 Financial Crisis',
+    title: 'Anatomy of a Meltdown: The 2008 Global Financial Crisis',
+    meta: ['16 min read', 'March 2026', 'Abhishek Gautam'],
+    content: `
+<p>On September 15, 2008, Lehman Brothers — a 158-year-old investment bank with $639 billion in assets — filed for bankruptcy. It was the largest bankruptcy in American history. Within weeks, the global financial system had locked up. Credit markets froze. Stock markets around the world lost trillions in value. Unemployment surged. The Great Recession that followed cost the global economy an estimated $22 trillion in lost output. Understanding how this happened is not merely an academic exercise — it is a moral and professional obligation for anyone who works in finance.</p>
+
+<div class="stat-row">
+  <div class="mini-stat"><strong>$639B</strong>Lehman Brothers assets at bankruptcy</div>
+  <div class="mini-stat"><strong>$22T</strong>Estimated global economic loss</div>
+  <div class="mini-stat"><strong>8.7M</strong>Jobs lost in the US alone</div>
+  <div class="mini-stat"><strong>$700B</strong>US TARP bailout package</div>
+</div>
+
+<h2>I. The Origins: A Housing Bubble Built on Sand</h2>
+<p>The 2008 crisis was years in the making. Its roots trace to the intersection of several converging forces in the early 2000s: ultra-low interest rates (the Federal Reserve kept rates near 1% from 2003–2004 in response to the dot-com bust and 9/11 recession), a belief that real estate prices could never fall nationally, and a financial system that had discovered a way to profit from mortgage origination regardless of whether borrowers could repay.</p>
+<p>The American housing market entered a speculative frenzy. Between 1997 and 2006, national home prices rose by approximately 124%. This attracted capital, speculators, and — crucially — a flood of new mortgage products designed to extend homeownership to borrowers who, under traditional lending standards, would not have qualified.</p>
+
+<h2>II. The Machinery of Disaster: How MBS and CDOs Amplified Risk</h2>
+<p>The weapon of mass financial destruction was the <strong>Mortgage-Backed Security</strong> and its more complex offspring, the <strong>Collateralized Debt Obligation</strong>. The basic mechanism was elegant in its simplicity and catastrophic in its consequences.</p>
+<p>Banks originate mortgages → sell them to investment banks → investment banks pool thousands of mortgages into MBS → sell tranches of MBS to investors globally → rating agencies assign AAA ratings to the senior tranches → investors worldwide (pension funds, insurance companies, foreign banks) buy them believing them to be safe.</p>
+<p>The flaw in this chain was the complete severance of credit risk from credit origination. Banks that once held mortgages on their balance sheets had every incentive to ensure borrowers could repay. Once they could sell mortgages immediately to Wall Street, the incentive to assess creditworthiness collapsed. The system's incentive structure actively encouraged recklessness.</p>
+
+<div class="highlight-box">
+<strong>The Ratings Agency Failure:</strong> Standard & Poor's, Moody's, and Fitch were paid by the very investment banks whose products they were rating — a textbook conflict of interest. They applied models that assumed national home price declines were essentially impossible. They were catastrophically wrong. Approximately $3.2 trillion of AAA-rated mortgage securities were eventually downgraded to junk.
+</div>
+
+<h2>III. The Subprime Engine</h2>
+<p>At the base of the pyramid was the subprime mortgage market. <strong>Subprime</strong> refers to mortgages extended to borrowers with weak credit histories, low incomes, or limited documentation. By 2006, subprime mortgages constituted nearly 20% of all new mortgage originations, up from 5% in 1994.</p>
+<p>The products were often predatory by design:</p>
+<ul>
+  <li><strong>NINJA loans</strong>: No Income, No Job, No Assets — lenders asked no questions</li>
+  <li><strong>Teaser rate ARMs</strong>: Adjustable-rate mortgages with artificially low initial rates that reset sharply upward after 2–3 years</li>
+  <li><strong>Negative amortization loans</strong>: Monthly payments so low that the principal balance actually increased over time</li>
+  <li><strong>Liar loans</strong>: Borrowers self-certified their income with no verification</li>
+</ul>
+<p>These products were not peripheral curiosities. They were sold by major financial institutions, securitized by Wall Street, and purchased by pension funds in Norway, municipal governments in Australia, and banks in Germany. The globalization of finance meant the globalization of American housing risk.</p>
+
+<h2>IV. The Role of Leverage: When Good Times Become Catastrophic</h2>
+<p>Financial leverage — borrowing to amplify investment returns — was at extraordinary levels across the banking system. Major investment banks like Bear Stearns and Lehman Brothers were operating at leverage ratios of 30:1 or higher. This means for every dollar of equity, they had borrowed thirty dollars. In good times, this amplifies returns. When asset prices fall even 3–5%, it destroys the equity capital entirely.</p>
+<p>The shadow banking system — hedge funds, money market funds, special purpose vehicles, broker-dealers — had grown to rival the traditional banking system in size, but operated outside the regulatory perimeter. It ran on short-term funding (overnight repo markets) while holding long-term, illiquid assets. When confidence evaporated, this maturity mismatch proved fatal.</p>
+
+<h2>V. The Cascade: September–October 2008</h2>
+<p>The crisis had been building for over a year before its acute phase. Bear Stearns was rescued by JP Morgan (with Federal Reserve support) in March 2008. Fannie Mae and Freddie Mac — the government-sponsored enterprises that guaranteed half of all American mortgages — were placed into conservatorship on September 7, 2008.</p>
+<p>Then came Lehman. Treasury Secretary Hank Paulson and Fed Chair Ben Bernanke made the fateful decision not to arrange a rescue. The reasoning was partly political (moral hazard — why should taxpayers bail out reckless bankers?) and partly because the legal mechanisms were unclear. The consequence was catastrophic. Lehman's failure triggered:</p>
+<ul>
+  <li>A run on money market funds (Reserve Primary Fund "broke the buck")</li>
+  <li>Collapse of the commercial paper market, freezing corporate funding</li>
+  <li>AIG, the world's largest insurer, required a $182 billion government rescue</li>
+  <li>Global interbank lending froze as banks refused to trust each other's solvency</li>
+  <li>Stock markets globally lost 30–50% of their value within weeks</li>
+</ul>
+
+<h2>VI. The Policy Response: Unprecedented Interventions</h2>
+<p>The response was equally unprecedented. In the US: TARP ($700B bailout), Federal Reserve emergency lending facilities totaling trillions, near-zero interest rates, and eventually Quantitative Easing — the purchase of government bonds and MBS to inject liquidity. In the UK: nationalization of Royal Bank of Scotland and HBOS. In Europe: massive bank recapitalizations. The IMF deployed record emergency lending facilities globally.</p>
+<p>These interventions prevented a second Great Depression — but they came at enormous cost: moral hazard (banks learned that systemic scale meant government protection), rising inequality (asset price reflation primarily benefited the wealthy), and a decade of austerity in Europe that generated social and political instability.</p>
+
+<h2>VII. The Aftermath and Reforms</h2>
+<p>The regulatory response in the US was the <strong>Dodd-Frank Act (2010)</strong>, the most sweeping financial regulation since the Great Depression. It created the Consumer Financial Protection Bureau, mandated stress tests for large banks, established resolution authorities to manage large bank failures, and attempted to regulate derivatives trading through central clearing. Basel III globally raised capital and liquidity requirements for banks.</p>
+<p>Have these reforms made the system safer? Partially. Bank capital ratios are much higher. The most egregious mortgage products are prohibited. But the shadow banking system has continued to grow. Private credit markets (outside traditional bank and bond financing) have expanded dramatically. And the "too big to fail" problem is arguably worse — the largest US banks are bigger relative to the economy than in 2008.</p>
+
+<h2>VIII. Lessons That Must Not Be Forgotten</h2>
+<blockquote>Every financial crisis is, at its core, a failure of governance — of incentives, accountability, and the willingness to restrain profitable behavior that is collectively destructive.</blockquote>
+<p>The 2008 crisis offers specific, enduring lessons for finance professionals:</p>
+<ul>
+  <li><strong>Complexity is not safety</strong> — the opacity of CDO-squared products was mistaken for sophistication</li>
+  <li><strong>Correlation destroys diversification in crisis</strong> — assets assumed to be uncorrelated became perfectly correlated when systemic stress struck</li>
+  <li><strong>Incentive structures determine behavior</strong> — fee-based origination created the mortgage quality collapse</li>
+  <li><strong>Liquidity risk is underestimated in good times</strong> — the difference between solvency and liquidity is theoretical until it matters</li>
+  <li><strong>No institution is too sophisticated to fail</strong> — Lehman, Bear Stearns, and Merrill Lynch were staffed by the world's brightest finance minds</li>
+</ul>
+<p>For Nepal's developing financial sector, the 2008 crisis is a textbook in what not to build. As Nepal's capital markets deepen, as securitization and financial innovation arrive (and they will), the regulatory infrastructure must be built in advance — not scrambled together after the damage is done.</p>
+<p>The crisis is history. Its lessons are not.</p>
+    `
+  }
+};
+</script>
+
+<!-- ══════════════════════════════════════════════════════════
+     MAIN SCRIPTS
+══════════════════════════════════════════════════════════ -->
+<script>
+/* ── PAGE NAVIGATION ── */
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
   setTimeout(initReveal,80);
+  if(id==='stopwatch') initStopwatch();
 }
 function closeMobile(){document.getElementById('navLinks').classList.remove('open')}
 function toggleMobile(){document.getElementById('navLinks').classList.toggle('open')}
+
+/* ── THEME ── */
 function toggleTheme(){
   const next=document.body.getAttribute('data-theme')!=='light'?'light':'dark';
   document.body.setAttribute('data-theme',next);
   localStorage.setItem('theme',next);
   document.getElementById('themeBtn').textContent=next==='dark'?'☀️':'🌙';
+  showToastNotif(next==='dark'?'🌙 Dark mode on':'☀️ Light mode on');
 }
+
+/* ── REVEAL ON SCROLL ── */
 function initReveal(){
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})
-  },{threshold:0.1});
+  },{threshold:0.08});
   document.querySelectorAll('.reveal').forEach(el=>{if(!el.classList.contains('visible'))obs.observe(el)});
 }
+
+/* ── HERO STARS ── */
 function buildStars(){
   const c=document.getElementById('heroStars');if(!c)return;
   for(let i=0;i<90;i++){
@@ -641,7 +1096,43 @@ function buildStars(){
   }
 }
 
-/* Contact form — FormSubmit AJAX */
+/* ── SCROLL PROGRESS ── */
+window.addEventListener('scroll',()=>{
+  const el=document.getElementById('scroll-progress');
+  if(!el)return;
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  el.style.width=(h>0?(window.scrollY/h)*100:0)+'%';
+});
+
+/* ── TOAST NOTIFICATION ── */
+function showToastNotif(msg){
+  const t=document.getElementById('toast-notif');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._tm);t._tm=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+/* ── ARTICLE MODAL ── */
+function openArticle(id){
+  const art=ARTICLES[id];if(!art)return;
+  document.getElementById('modalCat').textContent=art.cat;
+  document.getElementById('modalTitle').textContent=art.title;
+  const meta=document.getElementById('modalMeta');
+  meta.innerHTML=art.meta.map(m=>`<span class="modal-meta-chip">${m}</span>`).join('');
+  document.getElementById('modalContent').innerHTML=art.content;
+  const overlay=document.getElementById('articleModal');
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('articleModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('articleModal').addEventListener('click',function(e){
+  if(e.target===this)closeModal();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+/* ── CONTACT FORM ── */
 async function sendMessage(){
   const name=document.getElementById('f-name').value.trim();
   const email=document.getElementById('f-email').value.trim();
@@ -665,7 +1156,6 @@ async function sendMessage(){
     }else{throw new Error('fail')}
   }catch(err){
     showToast('error','❌ Something went wrong. Please email directly: abhishekgau1am@gmail.com');
-    console.error(err);
   }finally{btn.disabled=false;btn.textContent='Send Message ✉️';}
 }
 function showToast(type,msg){
@@ -674,18 +1164,22 @@ function showToast(type,msg){
   t.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
+/* ── INIT ── */
 window.addEventListener('load',()=>{
   const saved=localStorage.getItem('theme')||'dark';
   document.body.setAttribute('data-theme',saved);
   document.getElementById('themeBtn').textContent=saved==='dark'?'☀️':'🌙';
   buildStars();initReveal();
+  setTimeout(()=>showToastNotif('Welcome to Abhishek\'s portfolio 👋'),1200);
 });
 document.addEventListener('DOMContentLoaded',initReveal);
 </script>
 
-<!-- ═══ STOPWATCH JS (original, 100% unchanged) ═════════════════ -->
+<!-- ══ STOPWATCH JS ══════════════════════════════════════════ -->
 <script>
-$(document).ready(function(){
+let _swInit=false;
+function initStopwatch(){
+  if(_swInit)return;_swInit=true;
   if(typeof $.fn.ripples==='function'){
     try{$('#water-layer').ripples({resolution:512,dropRadius:20,perturbance:0.04,interactive:true});}
     catch(e){console.warn('Ripples:',e);}
@@ -727,7 +1221,7 @@ $(document).ready(function(){
   startBtn.addEventListener('click',startStopwatch);
   lapBtn.addEventListener('click',recordLap);
   resetBtn.addEventListener('click',resetStopwatch);
-});
+}
 </script>
 </body>
 </html>
